@@ -138,6 +138,7 @@ tools/
   seed-demo.js     fills 30 days of demo traffic, orders and quotes
   smoke.js         end-to-end API test
   shot.js          headless screenshot helper
+  probe.js         reports computed layout/visibility for selectors
   build-static.js  builds the GitHub Pages demo into docs/
   static-api.js    fetch shim that backs the static demo
   serve-docs.js    local preview of the Pages build

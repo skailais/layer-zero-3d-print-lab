@@ -37,6 +37,7 @@
       <a href="#main" class="skip">Skip to content</a>
       <div class="wipe" id="wipe"></div>
       <div class="cursor"><div class="cursor-dot"></div><div class="cursor-ring"></div></div>
+      <div class="nav-scrim" id="navScrim"></div>
       <header class="nav" id="nav">
         <a href="/" class="brand" data-track="nav:brand"><span class="sq"></span>LAYER ZERO<small>MARGATE·FL</small></a>
         <nav class="links">${NAV.map(([h, t], i) => `<a href="${h}" class="${h === PAGE ? 'active' : ''}"><span class="idx">0${i + 1}</span>${t}</a>`).join('')}</nav>
@@ -113,8 +114,9 @@
 
   // ---------- nav ----------
   function nav() {
-    const n = $('#nav'); let last = scrollY;
-    addEventListener('scroll', () => { const y = scrollY; if (y > last + 6 && y > 200 && !n.classList.contains('open')) n.classList.add('hide'); else if (y < last - 6) n.classList.remove('hide'); last = y; }, { passive: true });
+    const n = $('#nav'), scrim = $('#navScrim'); let last = scrollY;
+    const setHidden = v => { n.classList.toggle('hide', v); if (scrim) scrim.classList.toggle('hide', v); };
+    addEventListener('scroll', () => { const y = scrollY; if (y > last + 6 && y > 200 && !n.classList.contains('open')) setHidden(true); else if (y < last - 6) setHidden(false); last = y; }, { passive: true });
     $('#burger').addEventListener('click', () => { n.classList.toggle('open'); document.body.classList.toggle('no-scroll', n.classList.contains('open')); });
     $$('.links a', n).forEach(a => a.addEventListener('click', () => { n.classList.remove('open'); document.body.classList.remove('no-scroll'); }));
   }
