@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MASTER — LAYER ZERO control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c8102e'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+<div class="grain"></div>
+
+<!-- ============ LOGIN ============ -->
+<section class="login" id="login">
+  <form class="login-box corners" id="loginForm"><span class="c"></span>
+    <div class="mono red mb-2">RESTRICTED · MASTER CONTROL</div>
+    <h1 class="display h-m">LAYER ZERO</h1>
+    <p class="muted" style="font-size:13px;margin:10px 0 26px">Admin access for the lab owner and the site operator. Manage showcase, store, reviews, orders and settings without touching code.</p>
+    <div class="field"><label>PASSWORD</label><input type="password" id="pw" autocomplete="current-password" autofocus></div>
+    <button class="btn fill block" type="submit">ENTER <span class="arr"></span></button>
+    <div class="mono mt-2" id="loginErr" style="color:var(--red);min-height:16px"></div>
+  </form>
+</section>
+
+<!-- ============ APP ============ -->
+<div class="app hidden" id="app">
+  <aside class="side">
+    <a href="/" class="side-brand"><span class="sq"></span>LAYER ZERO<small>MASTER</small></a>
+    <nav class="side-nav" id="sideNav">
+      <button class="active" data-tab="overview"><i>01</i>Overview<b id="bOrders"></b></button>
+      <button data-tab="orders"><i>02</i>Orders<b id="bActive"></b></button>
+      <button data-tab="quotes"><i>03</i>Quotes<b id="bQuotes"></b></button>
+      <button data-tab="messages"><i>04</i>Messages<b id="bMsgs"></b></button>
+      <div class="side-sep">CONTENT</div>
+      <button data-tab="showcase"><i>05</i>Showcase</button>
+      <button data-tab="products"><i>06</i>Store</button>
+      <button data-tab="reviews"><i>07</i>Reviews</button>
+      <div class="side-sep">SYSTEM</div>
+      <button data-tab="activity"><i>08</i>Live activity</button>
+      <button data-tab="settings"><i>09</i>Settings</button>
+    </nav>
+    <div class="side-foot">
+      <a href="/" target="_blank" class="link-arrow">Open site</a>
+      <button class="mono" id="logout" style="text-align:left">LOG OUT</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <section class="tab" id="tab-overview">
+      <header class="th"><div><div class="mono">BUSINESS DASHBOARD</div><h2 class="display h-m">Overview</h2></div>
+        <div class="range" id="range"><button data-d="7">7D</button><button data-d="30" class="active">30D</button><button data-d="90">90D</button><button data-d="365">1Y</button></div></header>
+      <div class="kpis" id="kpis"></div>
+      <div class="charts">
+        <figure class="chart"><figcaption><b>Traffic</b><span>Daily page views · <i class="sw ink"></i> views · <i class="sw red"></i> sessions</span></figcaption><div class="chart-box"><canvas id="chTraffic"></canvas><div class="tip" id="tipTraffic"></div></div></figure>
+        <figure class="chart"><figcaption><b>Revenue</b><span>Daily order value, USD</span></figcaption><div class="chart-box"><canvas id="chRevenue"></canvas><div class="tip" id="tipRevenue"></div></div></figure>
+      </div>
+      <div class="panels">
+        <div class="panel"><h3>Conversion funnel</h3><div id="funnel"></div></div>
+        <div class="panel"><h3>Top clicks</h3><div id="clicks" class="bars"></div></div>
+        <div class="panel"><h3>Pages</h3><div id="pages" class="bars"></div></div>
+        <div class="panel"><h3>Orders by zone & status</h3><div id="zones" class="bars"></div></div>
+        <div class="panel"><h3>Top products</h3><div id="topProducts" class="bars"></div></div>
+        <div class="panel"><h3>Devices & referrers</h3><div id="devices" class="bars"></div></div>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="tab hidden" id="tab-orders">
+      <header class="th"><div><div class="mono">FULFILMENT</div><h2 class="display h-m">Orders</h2></div>
+        <div class="flex gap"><select class="sel" id="orderFilter"><option value="">All statuses</option><option>new</option><option>printing</option><option>ready</option><option>shipped</option><option>delivered</option><option>cancelled</option></select><button class="btn sm" data-export="orders">EXPORT JSON</button></div></header>
+      <div class="table-wrap"><table class="tbl" id="ordersTbl"></table></div>
+    </section>
+
+    <!-- QUOTES -->
+    <section class="tab hidden" id="tab-quotes">
+      <header class="th"><div><div class="mono">PIPELINE</div><h2 class="display h-m">Quote requests</h2></div><button class="btn sm" data-export="quotes">EXPORT JSON</button></header>
+      <div class="table-wrap"><table class="tbl" id="quotesTbl"></table></div>
+    </section>
+
+    <!-- MESSAGES -->
+    <section class="tab hidden" id="tab-messages">
+      <header class="th"><div><div class="mono">INBOX</div><h2 class="display h-m">Messages</h2></div></header>
+      <div id="msgList" class="msgs"></div>
+    </section>
+
+    <!-- CONTENT TABS -->
+    <section class="tab hidden" id="tab-showcase">
+      <header class="th"><div><div class="mono">CONTENT · SHOWCASE PAGE</div><h2 class="display h-m">Showcase items</h2></div><button class="btn sm red" data-new="showcase">+ ADD PIECE</button></header>
+      <p class="muted" style="font-size:13px">Drag the ≡ handle to reorder. Toggle visibility with the switch. Changes go live on the site immediately.</p>
+      <div class="items" id="list-showcase"></div>
+    </section>
+    <section class="tab hidden" id="tab-products">
+      <header class="th"><div><div class="mono">CONTENT · STORE PAGE</div><h2 class="display h-m">Products</h2></div><button class="btn sm red" data-new="products">+ ADD PRODUCT</button></header>
+      <p class="muted" style="font-size:13px">Price, variants, stock and lead time are edited here. Inactive products are hidden from the store but kept in past orders.</p>
+      <div class="items" id="list-products"></div>
+    </section>
+    <section class="tab hidden" id="tab-reviews">
+      <header class="th"><div><div class="mono">CONTENT · HOME PAGE</div><h2 class="display h-m">Reviews</h2></div><button class="btn sm red" data-new="reviews">+ ADD REVIEW</button></header>
+      <div class="items" id="list-reviews"></div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section class="tab hidden" id="tab-activity">
+      <header class="th"><div><div class="mono">TELEMETRY</div><h2 class="display h-m">Live activity</h2></div><div class="flex gap"><button class="btn sm" id="refreshAct">REFRESH</button><button class="btn sm" data-export="events">EXPORT</button><button class="btn sm" id="clearEvents">CLEAR LOG</button></div></header>
+      <div class="table-wrap"><table class="tbl" id="actTbl"></table></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="tab hidden" id="tab-settings">
+      <header class="th"><div><div class="mono">CONFIGURATION</div><h2 class="display h-m">Settings</h2></div></header>
+      <div class="settings-grid">
+        <form class="panel" id="fBusiness"><h3>Business</h3>
+          <div class="field"><label>NAME</label><input name="name"></div>
+          <div class="field"><label>TAGLINE</label><input name="tagline"></div>
+          <div class="field"><label>ADDRESS</label><input name="address"></div>
+          <div class="field-row"><div class="field"><label>PHONE</label><input name="phone"></div><div class="field"><label>EMAIL</label><input name="email"></div></div>
+          <div class="field"><label>HOURS</label><input name="hours"></div>
+          <button class="btn sm fill" type="submit">SAVE BUSINESS</button></form>
+        <form class="panel" id="fDelivery"><h3>Delivery</h3>
+          <div class="field-row"><div class="field"><label>LOCAL COURIER $</label><input name="local" type="number" step="0.5"></div><div class="field"><label>FLORIDA $</label><input name="florida" type="number" step="0.5"></div></div>
+          <div class="field-row"><div class="field"><label>NATIONWIDE $</label><input name="national" type="number" step="0.5"></div><div class="field"><label>EXPRESS SURCHARGE $</label><input name="expressSurcharge" type="number" step="0.5"></div></div>
+          <div class="field"><label>FREE SHIPPING OVER $</label><input name="freeOver" type="number" step="1"></div>
+          <div class="field"><label>PICKUP ZIPS (comma separated)</label><input name="pickupZips"></div>
+          <div class="field"><label>LOCAL ZIP PREFIXES (3 digits, comma separated)</label><input name="localZipPrefixes"></div>
+          <button class="btn sm fill" type="submit">SAVE DELIVERY</button></form>
+        <form class="panel" id="fPricing"><h3>Quote pricing · $/gram</h3>
+          <div class="field-row"><div class="field"><label>PLA</label><input name="pla" type="number" step="0.01"></div><div class="field"><label>PETG</label><input name="petg" type="number" step="0.01"></div></div>
+          <div class="field-row"><div class="field"><label>ABS</label><input name="abs" type="number" step="0.01"></div><div class="field"><label>TPU</label><input name="tpu" type="number" step="0.01"></div></div>
+          <div class="field-row"><div class="field"><label>NYLON CF</label><input name="nylon" type="number" step="0.01"></div><div class="field"><label>RESIN</label><input name="resin" type="number" step="0.01"></div></div>
+          <div class="field-row"><div class="field"><label>MIN ORDER $</label><input name="minOrder" type="number" step="1"></div><div class="field"><label>SETUP FEE $</label><input name="setupFee" type="number" step="0.5"></div></div>
+          <div class="field"><label>RUSH MULTIPLIER</label><input name="rush" type="number" step="0.1"></div>
+          <button class="btn sm fill" type="submit">SAVE PRICING</button></form>
+        <form class="panel" id="fPassword"><h3>Admin password</h3>
+          <div class="field"><label>CURRENT</label><input name="current" type="password" autocomplete="current-password"></div>
+          <div class="field"><label>NEW (6+ CHARS)</label><input name="next" type="password" autocomplete="new-password"></div>
+          <button class="btn sm fill" type="submit">CHANGE PASSWORD</button>
+          <p class="muted mt-2" style="font-size:12px">Default password on first run is <code>layerzero</code>. Change it before going public.</p></form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

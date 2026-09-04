@@ -1,0 +1,13 @@
+{
+  "name": "layer-zero-3d-print-lab",
+  "version": "1.0.0",
+  "description": "LAYER ZERO — local 3D printing service website (Margate, FL) with store, showcase, quoting and an admin master panel. Zero dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "assets": "node tools/gen-assets.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get a Quote — LAYER ZERO 3D Print Lab, Margate FL</title>
+<meta name="description" content="Upload an STL and get an instant 3D printing estimate. FDM, resin, nylon. Pickup in Margate FL or delivery anywhere in the US.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='%23e9e7e1'/%3E%3Cpath d='M16 12l4 4-4 4-4-4z' fill='%23c8102e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+
+<main id="main"><section class="page-hero">
+  <div class="ghost" aria-hidden="true">QUOTE</div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="n">04</span> INSTANT ESTIMATE · HUMAN-CONFIRMED</div>
+      <h1 class="display h-xl split">Drop a file. Get a number.</h1>
+      <p class="lead rv mt-2" style="--d:.2s">Upload an STL and we measure it in your browser — volume, size, print time — and price it live. No file yet? Describe the part and we'll model it.</p>
+    </div>
+    <div class="hud rv" style="--d:.3s">ACCEPTS: <b>STL · 3MF · STEP · OBJ</b><br>MAX FILE: <b>20 MB</b><br>MIN ORDER: <b id="minOrder">$15</b><br>REPLY: <b>WITHIN 1 BUSINESS HOUR</b></div>
+  </div>
+</section>
+
+<section class="section tight">
+  <div class="wrap q-grid">
+    <form class="q-form rv" id="qForm" novalidate>
+      <div class="drop" id="drop">
+        <input type="file" id="file" accept=".stl,.3mf,.step,.stp,.obj">
+        <div class="big" id="dropTitle">DROP YOUR MODEL HERE</div>
+        <div class="sub">or click to browse · STL is measured instantly<br>3MF / STEP / OBJ are measured by us after upload</div>
+        <div class="fname" id="fname"></div>
+      </div>
+
+      <div class="co-step">01 · MATERIAL</div>
+      <div class="mat-picker" id="matPicker">
+        <label><input type="radio" name="material" value="pla" checked><b>PLA</b><small>$0.08/g · models, prototypes</small></label>
+        <label><input type="radio" name="material" value="petg"><b>PETG</b><small>$0.10/g · outdoor, functional</small></label>
+        <label><input type="radio" name="material" value="abs"><b>ABS</b><small>$0.11/g · enclosures, heat</small></label>
+        <label><input type="radio" name="material" value="tpu"><b>TPU</b><small>$0.14/g · flexible</small></label>
+        <label><input type="radio" name="material" value="nylon"><b>NYLON CF</b><small>$0.18/g · load-bearing</small></label>
+        <label><input type="radio" name="material" value="resin"><b>RESIN</b><small>$0.22/g · fine detail</small></label>
+      </div>
+
+      <div class="co-step">02 · PARAMETERS</div>
+      <div class="field-row">
+        <div class="field"><label>INFILL</label><input type="range" class="slider" name="infill" min="10" max="100" step="5" value="20"><div class="slider-val"><span>HOLLOW</span><b id="infillVal">20%</b><span>SOLID</span></div></div>
+        <div class="field"><label>QUANTITY</label><input name="qty" type="number" min="1" max="999" value="1"><span class="hint">10+ units get 12% off</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>FINISH</label><select name="finish"><option value="raw">As printed</option><option value="sanded">Sanded & smoothed (+25%)</option><option value="painted">Primed & painted (+60%)</option></select></div>
+        <div class="field"><label>MODEL VOLUME (cm³)</label><input name="volumeCm3" type="number" min="0" step="0.1" placeholder="auto from STL"><span class="hint" id="dimsHint">Filled automatically when an STL is dropped</span></div>
+      </div>
+      <label class="check mb-2"><input type="checkbox" name="rush"> RUSH · next-day turnaround (+60%)</label>
+
+      <div class="co-step">03 · CONTACT</div>
+      <div class="field-row"><div class="field"><label>NAME</label><input name="name" required autocomplete="name"></div><div class="field"><label>EMAIL</label><input name="email" type="email" required autocomplete="email"></div></div>
+      <div class="field-row"><div class="field"><label>PHONE (OPTIONAL)</label><input name="phone" type="tel"></div><div class="field"><label>ZIP · FOR DELIVERY ESTIMATE</label><input name="zip" inputmode="numeric" maxlength="5" placeholder="33063"></div></div>
+      <div class="field"><label>NOTES · what is it, what must it survive?</label><textarea name="notes" placeholder="e.g. replacement bracket for a boat hatch, needs to handle sun and salt water"></textarea></div>
+      <button class="btn fill block" type="submit" id="qBtn" data-track="quote:submit">REQUEST FINAL QUOTE <span class="arr"></span></button>
+    </form>
+
+    <aside class="estimate rv" style="--d:.15s">
+      <div class="est-panel corners"><span class="c"></span>
+        <div class="preview"><canvas id="preview"></canvas><div class="ph" id="previewPh">NO MODEL LOADED<br>DROP AN STL TO SEE IT HERE</div><div class="lbl" id="previewLbl">PREVIEW · <b>—</b></div></div>
+        <div class="est-body">
+          <div class="mono">LIVE ESTIMATE</div>
+          <div class="est-num">
+            <div><b id="eGrams">—</b><span>grams</span></div>
+            <div><b id="eHours">—</b><span>print hours</span></div>
+            <div><b id="eLead">—</b><span>lead days</span></div>
+          </div>
+          <div class="est-total"><span class="mono">TOTAL · <span id="eQty">1</span> PC</span><b id="eTotal">$—</b></div>
+          <div class="mono mt-1" id="eUnit"></div>
+          <div class="est-note">Estimate uses model volume, infill and material density. Final quote confirmed by a technician before printing, usually within the hour. Delivery quoted separately by ZIP.</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="wrap">
+    <div class="faq rv">
+      <details><summary>What file should I send?</summary><p>STL is the universal format and gets measured instantly in your browser. 3MF, STEP and OBJ are fine too; we measure those after upload. If you only have a sketch or a broken part, skip the upload and describe it in the notes.</p></details>
+      <details><summary>How accurate is the instant estimate?</summary><p>Usually within 10–15% of the final price. Overhangs that need support, very thin walls, or exotic colours can shift it. A technician reviews every file and confirms the price before anything runs.</p></details>
+      <details><summary>Do you deliver outside Florida?</summary><p>Yes. Everything is printed in Margate, FL. Local orders can be picked up free or couriered within Broward, Miami-Dade and Palm Beach. We ship tracked to all 50 states.</p></details>
+      <details><summary>Can you keep my design confidential?</summary><p>Yes. Files are stored privately, never published, and deleted on request once the job is complete. NDAs are welcome for commercial work.</p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="/js/core.js"></script>
+<script src="/js/quote.js"></script>
+</body>
+</html>

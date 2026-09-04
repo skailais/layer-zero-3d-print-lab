@@ -1,0 +1,18 @@
+# Runtime data — contains the admin password hash and live orders.
+# Rebuilt automatically on first run from data-seed.js.
+/data/
+
+# Customer STL uploads and admin image uploads
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Logs
+*.log
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+node_modules/

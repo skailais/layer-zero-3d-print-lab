@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LAYER ZERO — 3D Print Lab · Margate, FL</title>
+<meta name="description" content="Local 3D printing service in Margate, Florida. FDM, resin and nylon prints from your files, design help, batch production. Same-day pickup in Broward, delivery across Florida and the US.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='%23e9e7e1'/%3E%3Cpath d='M16 12l4 4-4 4-4-4z' fill='%23c8102e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<main id="main"><section class="hero" id="hero">
+  <canvas id="heroCanvas" class="hero-canvas"></canvas>
+  <div class="hero-vtext display" aria-hidden="true"><span>PRINT</span></div>
+  <div class="hero-redbar"></div>
+
+  <div class="hero-hud hud-tl mono">EDITION 001 · LOCAL FABRICATION<br>SUBJECT: <b>YOUR FILE</b><br>STATUS: <b class="blink">READY</b></div>
+  <div class="hero-hud hud-tr mono">26.2445° N<br>80.2064° W<br>MARGATE · FL · 33063</div>
+  <div class="hero-hud hud-ml mono">
+    RESET · 001 / START PRINT /<br>
+    <span id="hudDate"></span> /<br>
+    UNCERTAINTY INDEX: <b>LOW</b><br>
+    PROTOCOL: <b>UPLOAD → QUOTE → PRINT</b><br>
+    OBSERVE • WAIT • GO
+  </div>
+  <div class="hero-hud hud-br mono">FDM · SLA · NYLON CF<br>0.05 – 0.30 mm LAYERS<br>PICKUP · COURIER · SHIPPING</div>
+
+  <div class="hero-copy">
+    <div class="eyebrow rv"><span class="n">01</span> 3D PRINT LAB · MARGATE, FLORIDA</div>
+    <h1 class="display hero-title split">Ideas into objects. Locally made.</h1>
+    <p class="lead rv" style="--d:.3s">Upload a model, get a quote in minutes, and pick it up in Margate or have it delivered anywhere in the US. Engineering-grade FDM, fine-detail resin, and carbon nylon under one roof.</p>
+    <div class="hero-cta rv" style="--d:.45s">
+      <a href="quote.html" class="btn red magnetic" data-track="hero:quote">GET A QUOTE <span class="arr"></span></a>
+      <a href="store.html" class="btn magnetic" data-track="hero:store">VISIT THE STORE <span class="arr"></span></a>
+    </div>
+  </div>
+
+  <div class="hero-diag display" aria-hidden="true"><span>MAKE IT</span><span class="o">REAL</span></div>
+  <div class="hero-scroll mono"><span>SCROLL</span><i></i></div>
+  <div class="crosshair" style="left:50%;top:50%;transform:translate(-50%,-50%)"></div>
+</section>
+
+<div class="marquee"><div class="track" id="marquee1"></div></div>
+
+<!-- ================= SERVICES ================= -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="grid-2 mb-3">
+      <div>
+        <div class="eyebrow"><span class="n">02</span> WHAT WE DO</div>
+        <h2 class="display h-l split">Print, design, iterate, repeat.</h2>
+      </div>
+      <p class="lead rv">From a single replacement part to a run of five hundred. Bring a file, a sketch, or a broken object — we take it from there.</p>
+    </div>
+    <div class="grid-3 svc-grid" data-stagger=".svc">
+      <div class="svc rv corners"><span class="c"></span><div class="mono">01 / CUSTOM PRINTS</div><h3 class="display">Print from your file</h3><p>STL, 3MF, STEP or OBJ. Choose material, infill and finish. We check printability and quote before anything runs.</p><a href="quote.html" class="link-arrow" data-track="svc:custom">Upload a model</a></div>
+      <div class="svc rv corners"><span class="c"></span><div class="mono">02 / DESIGN</div><h3 class="display">CAD & reverse engineering</h3><p>No file? We measure, model and prototype. Broken bracket, lost knob, a product idea on a napkin — all valid inputs.</p><a href="quote.html" class="link-arrow" data-track="svc:design">Describe your part</a></div>
+      <div class="svc rv corners"><span class="c"></span><div class="mono">03 / PRODUCTION</div><h3 class="display">Small-batch runs</h3><p>Multi-printer farm for 10 to 1,000 units. Consistent tolerances, colour matching, labelled and packed.</p><a href="quote.html" class="link-arrow" data-track="svc:batch">Plan a batch</a></div>
+      <div class="svc rv corners"><span class="c"></span><div class="mono">04 / FINISHING</div><h3 class="display">Post-processing</h3><p>Sanding, vapour smoothing, priming and painting, heat-set inserts, resin post-cure. Ready to ship or ready to show.</p><a href="showcase.html" class="link-arrow" data-track="svc:finish">See finished work</a></div>
+      <div class="svc rv corners"><span class="c"></span><div class="mono">05 / MODELS</div><h3 class="display">Architecture & terrain</h3><p>Site models, topographic slabs, presentation pieces. Tiled large-format prints with invisible joins.</p><a href="showcase.html" class="link-arrow" data-track="svc:models">View models</a></div>
+      <div class="svc rv corners"><span class="c"></span><div class="mono">06 / REPAIR</div><h3 class="display">Replacement parts</h3><p>Appliance clips, car trim, tool handles, RC parts. Often cheaper than the OEM part and stronger in the right material.</p><a href="quote.html" class="link-arrow" data-track="svc:repair">Fix something</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="section process" id="process">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">03</span> HOW IT WORKS</div>
+    <h2 class="display h-l split mb-3">Four steps. No mystery.</h2>
+    <div class="proc-line rv-line"></div>
+    <div class="grid-4 proc-grid" data-stagger=".step">
+      <div class="step rv"><div class="step-n display">01</div><h3>Upload</h3><p>Send your model through the quote page or walk in with a drawing. We reply with feasibility notes the same day.</p><div class="mono">≈ 2 MIN</div></div>
+      <div class="step rv"><div class="step-n display">02</div><h3>Quote</h3><p>Instant estimate from volume, material and finish. Final price confirmed by a human before we start.</p><div class="mono">≈ 1 HOUR</div></div>
+      <div class="step rv"><div class="step-n display">03</div><h3>Print</h3><p>Sliced with tuned profiles, monitored in progress. Typical lead time is 1–3 days; rush is available.</p><div class="mono">1–3 DAYS</div></div>
+      <div class="step rv"><div class="step-n display">04</div><h3>Pickup / Deliver</h3><p>Collect in Margate, courier across Broward, or tracked shipping anywhere in Florida and the US.</p><div class="mono">SAME DAY – 6 DAYS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MATERIALS ================= -->
+<section class="section materials" id="materials">
+  <div class="wrap">
+    <div class="grid-2 mb-3">
+      <div><div class="eyebrow"><span class="n">04</span> MATERIALS</div><h2 class="display h-l split">Pick the right polymer.</h2></div>
+      <p class="lead rv">Six stocked materials, twenty-plus colours. Hover a row for the spec. Not sure? Say what the part needs to survive and we'll choose.</p>
+    </div>
+    <div class="mat-table" data-stagger=".mat">
+      <div class="mat head mono"><span>MATERIAL</span><span>STRENGTH</span><span>HEAT</span><span>DETAIL</span><span>FLEX</span><span>FROM</span></div>
+      <div class="mat rv" data-mat="pla"><span><b>PLA</b><small>Everyday parts, models, prototypes</small></span><span class="bar"><i style="--v:55%"></i></span><span class="bar"><i style="--v:30%"></i></span><span class="bar"><i style="--v:75%"></i></span><span class="bar"><i style="--v:15%"></i></span><span class="pr">$0.08/g</span></div>
+      <div class="mat rv" data-mat="petg"><span><b>PETG</b><small>Outdoor, food-safe, functional</small></span><span class="bar"><i style="--v:70%"></i></span><span class="bar"><i style="--v:55%"></i></span><span class="bar"><i style="--v:65%"></i></span><span class="bar"><i style="--v:30%"></i></span><span class="pr">$0.10/g</span></div>
+      <div class="mat rv" data-mat="abs"><span><b>ABS</b><small>Enclosures, automotive, vapour-smoothable</small></span><span class="bar"><i style="--v:72%"></i></span><span class="bar"><i style="--v:80%"></i></span><span class="bar"><i style="--v:60%"></i></span><span class="bar"><i style="--v:25%"></i></span><span class="pr">$0.11/g</span></div>
+      <div class="mat rv" data-mat="tpu"><span><b>TPU 95A</b><small>Flexible grips, gaskets, wearables</small></span><span class="bar"><i style="--v:50%"></i></span><span class="bar"><i style="--v:45%"></i></span><span class="bar"><i style="--v:50%"></i></span><span class="bar"><i style="--v:95%"></i></span><span class="pr">$0.14/g</span></div>
+      <div class="mat rv" data-mat="nylon"><span><b>NYLON CF</b><small>Brackets, frames, load-bearing</small></span><span class="bar"><i style="--v:95%"></i></span><span class="bar"><i style="--v:85%"></i></span><span class="bar"><i style="--v:60%"></i></span><span class="bar"><i style="--v:20%"></i></span><span class="pr">$0.18/g</span></div>
+      <div class="mat rv" data-mat="resin"><span><b>RESIN</b><small>Miniatures, jewellery masters, fine detail</small></span><span class="bar"><i style="--v:45%"></i></span><span class="bar"><i style="--v:40%"></i></span><span class="bar"><i style="--v:100%"></i></span><span class="bar"><i style="--v:10%"></i></span><span class="pr">$0.22/g</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHOWCASE STRIP ================= -->
+<section class="section showcase-strip" id="work">
+  <div class="wrap">
+    <div class="flex between center wrapf gap mb-3">
+      <div><div class="eyebrow"><span class="n">05</span> SELECTED WORK</div><h2 class="display h-l split">Printed here.</h2></div>
+      <a href="showcase.html" class="btn magnetic" data-track="home:showcase-all">FULL SHOWCASE <span class="arr"></span></a>
+    </div>
+  </div>
+  <div class="strip scrollbar-none" id="workStrip"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+</section>
+
+<!-- ================= DELIVERY ================= -->
+<section class="section delivery" id="delivery">
+  <div class="wrap grid-2">
+    <div>
+      <div class="eyebrow"><span class="n">06</span> PICKUP & DELIVERY</div>
+      <h2 class="display h-l split">Made in Margate. Delivered anywhere.</h2>
+      <p class="lead rv mt-2">We print in Margate, Florida. Locals collect at the lab for free. Everyone else gets courier or tracked shipping — the rate is set by your ZIP code.</p>
+      <div class="zones" data-stagger=".zone">
+        <div class="zone rv"><b>PICKUP</b><span>Margate / Coconut Creek / Coral Springs</span><em id="rPickup">FREE</em></div>
+        <div class="zone rv"><b>LOCAL COURIER</b><span>Broward · Miami-Dade · Palm Beach</span><em id="rLocal">$9</em></div>
+        <div class="zone rv"><b>FLORIDA</b><span>Statewide, 2–3 business days</span><em id="rFlorida">$14</em></div>
+        <div class="zone rv"><b>NATIONWIDE</b><span>All 50 states, 4–6 business days</span><em id="rNational">$22</em></div>
+      </div>
+      <form class="zip-check rv" id="zipForm">
+        <div class="field" style="margin:0;flex:1"><label>CHECK YOUR ZIP</label><input id="zipInput" inputmode="numeric" maxlength="5" placeholder="33063"></div>
+        <button class="btn sm" type="submit" data-track="delivery:zip-check">CHECK <span class="arr"></span></button>
+      </form>
+      <div class="zip-result mono" id="zipResult"></div>
+    </div>
+    <div class="map-wrap rv-scale">
+      <svg class="map" viewBox="0 0 600 600" id="zoneMap">
+        <defs><radialGradient id="mg" cx="50%" cy="50%"><stop offset="0" stop-color="#c8102e" stop-opacity=".25"/><stop offset="1" stop-color="#c8102e" stop-opacity="0"/></radialGradient></defs>
+        <rect width="600" height="600" fill="#0f0f10"/>
+        <g stroke="#e9e7e1" stroke-opacity=".08"><path d="M0 100H600M0 200H600M0 300H600M0 400H600M0 500H600M100 0V600M200 0V600M300 0V600M400 0V600M500 0V600"/></g>
+        <!-- stylised Florida peninsula -->
+        <path id="fl" d="M40 112 L120 104 L200 112 L292 122 L332 112 L352 142 L372 202 L402 262 L432 322 L462 382 L490 440 L500 490 L470 540 L440 522 L420 472 L400 422 L380 372 L358 322 L330 272 L300 232 L282 172 L250 152 L180 154 L120 164 L60 152 Z" fill="#1a1a1d" stroke="#e9e7e1" stroke-opacity=".5"/>
+        <g id="rings" fill="none" stroke="#e9e7e1">
+          <circle cx="455" cy="430" r="230" stroke-opacity=".12" stroke-dasharray="4 6"/>
+          <circle cx="455" cy="430" r="140" stroke-opacity=".2" stroke-dasharray="3 5"/>
+          <circle cx="455" cy="430" r="60" stroke-opacity=".45"/>
+          <circle cx="455" cy="430" r="60" fill="url(#mg)"/>
+        </g>
+        <g id="pin"><circle cx="455" cy="430" r="5" fill="#c8102e"/><circle cx="455" cy="430" r="12" fill="none" stroke="#c8102e" class="pulse"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="10" fill="#e9e7e1" letter-spacing="1.5">
+          <text x="470" y="426" opacity=".9">MARGATE</text><text x="470" y="440" opacity=".5">33063</text>
+          <text x="300" y="260" opacity=".5">FLORIDA</text><text x="40" y="560" opacity=".4">NATIONWIDE →</text>
+          <text x="330" y="540" opacity=".5">LOCAL</text><text x="240" y="430" opacity=".35">ZONE 2</text>
+        </g>
+        <path d="M470 540 L400 585" stroke="#e9e7e1" stroke-opacity=".4" stroke-dasharray="2 4"/><path d="M455 430 L330 340" stroke="#e9e7e1" stroke-opacity=".5"/><text x="120" y="334" font-family="JetBrains Mono, monospace" font-size="10" fill="#e9e7e1" letter-spacing="1.5">LAB · 26.24N 80.21W</text>
+        <g stroke="#e9e7e1" stroke-width="1.5" fill="none" opacity=".8"><path d="M20 40V20h20M560 20h20v20M20 560v20h20M580 560v20h-20"/></g>
+      </svg>
+      <div class="map-tag mono">FIG. 06 · SERVICE RADIUS · NOT TO SCALE</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="section tight stats">
+  <div class="wrap grid-4" data-stagger=".stat">
+    <div class="stat rv"><div class="display h-l"><span data-count="4180">0</span>+</div><div class="mono">PARTS PRINTED</div></div>
+    <div class="stat rv"><div class="display h-l"><span data-count="38">0</span>K</div><div class="mono">PRINT HOURS</div></div>
+    <div class="stat rv"><div class="display h-l"><span data-count="2.4">0</span>D</div><div class="mono">AVG LEAD TIME</div></div>
+    <div class="stat rv"><div class="display h-l"><span data-count="98.6">0</span>%</div><div class="mono">ON-TIME DELIVERY</div></div>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">07</span> CLIENT NOTES</div>
+    <h2 class="display h-l split mb-3">What people say after pickup.</h2>
+    <div class="grid-3 review-grid" id="reviewGrid" data-stagger=".review"></div>
+  </div>
+</section>
+
+<!-- ================= STORE STRIP ================= -->
+<section class="section store-strip" id="shop">
+  <div class="wrap">
+    <div class="flex between center wrapf gap mb-3">
+      <div><div class="eyebrow"><span class="n">08</span> READY-MADE</div><h2 class="display h-l split">Printed goods, shipped.</h2></div>
+      <a href="store.html" class="btn magnetic" data-track="home:store-all">OPEN STORE <span class="arr"></span></a>
+    </div>
+    <div class="grid-4 product-grid" id="productGrid" data-stagger=".card"></div>
+  </div>
+</section>
+
+<div class="marquee big"><div class="track" id="marquee2"></div></div>
+
+<!-- ================= CONTACT ================= -->
+<section class="section contact" id="contact">
+  <div class="wrap grid-2">
+    <div>
+      <div class="eyebrow"><span class="n">09</span> CONTACT</div>
+      <h2 class="display h-xl split">Talk to a human.</h2>
+      <p class="lead rv mt-2">Questions about a material, a deadline, or whether something can be printed at all — send it over. We answer within a business hour.</p>
+      <div class="contact-meta rv mt-3">
+        <div><span class="mono">VISIT</span><b id="cAddr">5400 W Atlantic Blvd, Margate, FL 33063</b></div>
+        <div><span class="mono">HOURS</span><b id="cHours">Mon–Sat 09:00–19:00</b></div>
+        <div><span class="mono">CALL</span><b id="cPhone">(954) 555-0142</b></div>
+      </div>
+    </div>
+    <form class="contact-form rv corners" id="contactForm"><span class="c"></span>
+      <div class="field-row"><div class="field"><label>NAME</label><input name="name" required></div><div class="field"><label>EMAIL</label><input name="email" type="email" required></div></div>
+      <div class="field"><label>MESSAGE</label><textarea name="message" required placeholder="What are you trying to make?"></textarea></div>
+      <button class="btn fill block" type="submit" data-track="contact:send">SEND MESSAGE <span class="arr"></span></button>
+    </form>
+  </div>
+</section>
+
+</main>
+<script src="js/demo-data.js"></script>
+<script src="js/static-api.js"></script>
+<script src="js/core.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

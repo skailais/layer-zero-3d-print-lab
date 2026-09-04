@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Store — LAYER ZERO 3D Print Lab, Margate FL</title>
+<meta name="description" content="Ready-made 3D printed goods from Margate, Florida. Pickup at the lab, courier in Broward, shipping across Florida and the US.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='%23e9e7e1'/%3E%3Cpath d='M16 12l4 4-4 4-4-4z' fill='%23c8102e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<main id="main"><section class="page-hero">
+  <div class="ghost" aria-hidden="true">SHOP</div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="n">03</span> STORE · PRINTED GOODS</div>
+      <h1 class="display h-xl split">Objects ready to ship.</h1>
+      <p class="lead rv mt-2" style="--d:.2s">Designed and printed in-house, made to order in 1–5 days. Free pickup in Margate, courier across South Florida, tracked shipping everywhere else.</p>
+    </div>
+    <div class="hud rv" style="--d:.3s">CATALOG · <b id="cnt">00</b> SKU<br>FREE SHIPPING OVER <b id="freeOver">$150</b><br>PICKUP: <b>FREE · MARGATE FL</b><br>MADE TO ORDER · 1–5 DAYS</div>
+  </div>
+</section>
+
+<section class="section tight" id="catalog">
+  <div class="wrap">
+    <div class="filters" id="filters"><button class="active" data-f="all">ALL</button><span class="sp"></span><span class="count" id="count"></span></div>
+    <div class="store-grid" id="grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+  </div>
+</section>
+
+<!-- ================= CHECKOUT ================= -->
+<section class="section checkout" id="checkout">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">CHECKOUT</span> PICKUP OR DELIVERY</div>
+    <h2 class="display h-l split mb-3">Where should it go?</h2>
+    <div id="coEmpty" class="empty-note" style="text-align:left;padding:30px 0">Your cart is empty. Add something from the catalog above.</div>
+    <div class="co-grid" id="coGrid">
+      <form class="co-form rv" id="coForm" novalidate>
+        <h3>DETAILS</h3>
+        <div class="field-row"><div class="field"><label>FULL NAME</label><input name="name" required autocomplete="name"></div><div class="field"><label>EMAIL</label><input name="email" type="email" required autocomplete="email"></div></div>
+        <div class="field"><label>PHONE (OPTIONAL)</label><input name="phone" type="tel" autocomplete="tel"></div>
+        <div class="co-step">01 · FULFILMENT</div>
+        <div class="radio-tiles" id="methodTiles">
+          <label><input type="radio" name="method" value="delivery" checked><b>DELIVERY</b><small>Courier or tracked shipping, rate by ZIP</small></label>
+          <label><input type="radio" name="method" value="pickup"><b>PICKUP AT THE LAB</b><small>Free · Margate, FL · same day when ready</small></label>
+        </div>
+        <div id="addrBlock">
+          <div class="co-step">02 · ADDRESS</div>
+          <div class="field"><label>STREET ADDRESS</label><input name="address" autocomplete="street-address"></div>
+          <div class="field-row"><div class="field"><label>CITY</label><input name="city" autocomplete="address-level2"></div><div class="field"><label>ZIP</label><input name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="33063"></div></div>
+          <div class="mono ink" id="zoneNote" style="min-height:18px;margin-bottom:16px"></div>
+          <label class="check"><input type="checkbox" name="express"> EXPRESS · priority print queue + expedited carrier <span id="expressFee">+$25</span></label>
+        </div>
+        <div class="co-step">03 · NOTES</div>
+        <div class="field"><label>ANYTHING WE SHOULD KNOW?</label><textarea name="notes" placeholder="Colour preferences, gate codes, gift note…"></textarea></div>
+        <button class="btn fill block mt-2" type="submit" id="placeBtn" data-track="checkout:place-order">PLACE ORDER <span class="arr"></span></button>
+        <p class="muted mt-2" style="font-size:12px">Demo checkout: no payment is collected. In production this step hands off to Stripe / PayPal.</p>
+      </form>
+      <aside class="summary rv" style="--d:.15s">
+        <h3>SUMMARY</h3>
+        <div id="sumLines"></div>
+        <div class="tot"><span>SUBTOTAL</span><span id="sSub">$0.00</span></div>
+        <div class="tot"><span>SHIPPING</span><span id="sShip">—</span></div>
+        <div class="tot"><span>TAX (7%)</span><span id="sTax">$0.00</span></div>
+        <div class="tot big"><span>TOTAL</span><span id="sTot">$0.00</span></div>
+        <div class="eta" id="sEta"></div>
+      </aside>
+    </div>
+    <div id="confirm" class="confirm hidden rv"></div>
+  </div>
+</section>
+
+<!-- ================= TRACK ================= -->
+<section class="section" id="track">
+  <div class="wrap">
+    <div class="track-box">
+      <div class="eyebrow"><span class="n">TRACK</span> ORDER STATUS</div>
+      <h2 class="display h-l split mb-2">Where is my print?</h2>
+      <form class="flex gap" id="trackForm" style="align-items:flex-end">
+        <div class="field" style="flex:1;margin:0"><label>ORDER NUMBER</label><input id="trackId" placeholder="LZ-1001"></div>
+        <button class="btn sm" type="submit" data-track="track:lookup">LOOK UP <span class="arr"></span></button>
+      </form>
+      <div class="track-res" id="trackRes"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="js/demo-data.js"></script>
+<script src="js/static-api.js"></script>
+<script src="js/core.js"></script>
+<script src="js/store.js"></script>
+</body>
+</html>
