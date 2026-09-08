@@ -354,3 +354,21 @@ body.drawer-open .drawer { transform: none; }
 @keyframes sk { to { background-position: -200% 0; } }
 .scrollbar-none { scrollbar-width: none; } .scrollbar-none::-webkit-scrollbar { display: none; }
 ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--dim-2); }
+
+/* ---------- no-JS fallback chrome ----------
+   The header, skip link and cart are injected by core.js, and every .rv block
+   starts at opacity 0 until the observer adds .in. With scripting off that left
+   the pages showing a headline over empty space. These rules style a static
+   header that only ever renders inside <noscript>, so the scripted path is
+   untouched. */
+.nojs-nav { position: relative; z-index: 5; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 12px 28px; padding: 18px var(--gutter); border-bottom: 1px solid var(--line); background: var(--bg-2); }
+.nojs-nav .brand { font-family: var(--display); font-size: 20px; letter-spacing: .02em; color: var(--ink); text-decoration: none; }
+.nojs-nav a { color: var(--ink-2); text-decoration: none; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .16em; text-transform: uppercase; }
+.nojs-nav a:hover, .nojs-nav a:focus { color: var(--red-2); }
+.nojs-nav .links { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-left: auto; }
+.nojs-note { margin: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.nojs-note a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--red); }
+.nojs-note a:hover, .nojs-note a:focus { color: var(--red-2); }
