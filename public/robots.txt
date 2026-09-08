@@ -1,0 +1,13 @@
+# LAYER ZERO
+# Note: on GitHub Pages the site lives under a subpath, and only a robots.txt at
+# the domain root is honoured — the master panel is kept out of the index by its
+# own <meta name="robots" content="noindex"> instead. This file governs the
+# self-hosted server and any future custom domain.
+
+User-agent: *
+Allow: /
+Disallow: /master
+Disallow: /master.html
+Disallow: /uploads/
+
+Sitemap: https://skailais.github.io/layer-zero-3d-print-lab/sitemap.xml

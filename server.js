@@ -112,7 +112,10 @@ const MIME = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript',
   '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml', '.webp': 'image/webp', '.gif': 'image/gif', '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2', '.woff': 'font/woff', '.stl': 'model/stl', '.txt': 'text/plain'
+  '.woff2': 'font/woff2', '.woff': 'font/woff', '.stl': 'model/stl', '.txt': 'text/plain',
+  // without this the sitemap is served as application/octet-stream and offered
+  // to the visitor as a download instead of being read as a sitemap
+  '.xml': 'application/xml'
 };
 function send(res, status, body, headers = {}) {
   const isObj = typeof body === 'object' && !Buffer.isBuffer(body);
