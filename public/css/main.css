@@ -299,7 +299,7 @@ body.drawer-open .drawer { transform: none; }
 /* ---------- footer ---------- */
 .footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 60px var(--gutter) 30px; background: var(--bg); }
 .footer .f-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 40px; max-width: 1480px; margin: 0 auto; }
-.footer h4 { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); margin-bottom: 18px; }
+.footer h2 { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); margin-bottom: 18px; }
 .footer a, .footer p { display: block; font-size: 14px; color: var(--ink-2); margin-bottom: 8px; transition: color .3s; }
 .footer a:hover { color: var(--ink); }
 .footer .big { font-family: var(--display); font-size: clamp(60px, 10vw, 150px); line-height: .85; letter-spacing: .01em; color: var(--bg-3); -webkit-text-stroke: 1px var(--line-2); margin-top: 40px; text-align: right; user-select: none; }
@@ -372,3 +372,9 @@ body.drawer-open .drawer { transform: none; }
   font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
 .nojs-note a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--red); }
 .nojs-note a:hover, .nojs-note a:focus { color: var(--red-2); }
+
+/* Available to a screen reader, absent from the page. Used for the section
+   headings above the catalogue grids: the cards are h3, and without an h2
+   between them and the page title the outline jumped two levels. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }

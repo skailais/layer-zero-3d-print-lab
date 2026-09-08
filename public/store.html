@@ -50,6 +50,7 @@
 <section class="section tight" id="catalog">
   <div class="wrap">
     <div class="filters" id="filters"><button class="active" data-f="all">ALL</button><span class="sp"></span><span class="count" id="count"></span></div>
+    <h2 class="sr-only">Printed goods</h2>
     <div class="store-grid" id="grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
   </div>
 </section>
@@ -63,8 +64,8 @@
     <div class="co-grid" id="coGrid">
       <form class="co-form rv" id="coForm" novalidate>
         <h3>DETAILS</h3>
-        <div class="field-row"><div class="field"><label>FULL NAME</label><input name="name" required autocomplete="name"></div><div class="field"><label>EMAIL</label><input name="email" type="email" required autocomplete="email"></div></div>
-        <div class="field"><label>PHONE (OPTIONAL)</label><input name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field-row"><div class="field"><label for="f-name">FULL NAME</label><input id="f-name" name="name" required autocomplete="name"></div><div class="field"><label for="f-email">EMAIL</label><input id="f-email" name="email" type="email" required autocomplete="email"></div></div>
+        <div class="field"><label for="f-phone">PHONE (OPTIONAL)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
         <div class="co-step">01 · FULFILMENT</div>
         <div class="radio-tiles" id="methodTiles">
           <label><input type="radio" name="method" value="delivery" checked><b>DELIVERY</b><small>Courier or tracked shipping, rate by ZIP</small></label>
@@ -72,13 +73,13 @@
         </div>
         <div id="addrBlock">
           <div class="co-step">02 · ADDRESS</div>
-          <div class="field"><label>STREET ADDRESS</label><input name="address" autocomplete="street-address"></div>
-          <div class="field-row"><div class="field"><label>CITY</label><input name="city" autocomplete="address-level2"></div><div class="field"><label>ZIP</label><input name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="33063"></div></div>
+          <div class="field"><label for="f-address">STREET ADDRESS</label><input id="f-address" name="address" autocomplete="street-address"></div>
+          <div class="field-row"><div class="field"><label for="f-city">CITY</label><input id="f-city" name="city" autocomplete="address-level2"></div><div class="field"><label for="f-zip">ZIP</label><input id="f-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="33063"></div></div>
           <div class="mono ink" id="zoneNote" style="min-height:18px;margin-bottom:16px"></div>
           <label class="check"><input type="checkbox" name="express"> EXPRESS · priority print queue + expedited carrier <span id="expressFee">+$25</span></label>
         </div>
         <div class="co-step">03 · NOTES</div>
-        <div class="field"><label>ANYTHING WE SHOULD KNOW?</label><textarea name="notes" placeholder="Colour preferences, gate codes, gift note…"></textarea></div>
+        <div class="field"><label for="f-notes">ANYTHING WE SHOULD KNOW?</label><textarea id="f-notes" name="notes" placeholder="Colour preferences, gate codes, gift note…"></textarea></div>
         <button class="btn fill block mt-2" type="submit" id="placeBtn" data-track="checkout:place-order">PLACE ORDER <span class="arr"></span></button>
         <p class="muted mt-2" style="font-size:12px">Demo checkout: no payment is collected. In production this step hands off to Stripe / PayPal.</p>
       </form>
@@ -103,7 +104,7 @@
       <div class="eyebrow"><span class="n">TRACK</span> ORDER STATUS</div>
       <h2 class="display h-l split mb-2">Where is my print?</h2>
       <form class="flex gap" id="trackForm" style="align-items:flex-end">
-        <div class="field" style="flex:1;margin:0"><label>ORDER NUMBER</label><input id="trackId" placeholder="LZ-1001"></div>
+        <div class="field" style="flex:1;margin:0"><label for="trackId">ORDER NUMBER</label><input id="trackId" placeholder="LZ-1001" aria-label="Order number, to track an order"></div>
         <button class="btn sm" type="submit" data-track="track:lookup">LOOK UP <span class="arr"></span></button>
       </form>
       <div class="track-res" id="trackRes"></div>

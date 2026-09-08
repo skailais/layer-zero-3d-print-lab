@@ -49,7 +49,7 @@
   <div class="wrap q-grid">
     <form class="q-form rv" id="qForm" novalidate>
       <div class="drop" id="drop">
-        <input type="file" id="file" accept=".stl,.3mf,.step,.stp,.obj">
+        <input type="file" id="file" accept=".stl,.3mf,.step,.stp,.obj" aria-label="Choose a model file to price">
         <div class="big" id="dropTitle">DROP YOUR MODEL HERE</div>
         <div class="sub">or click to browse · STL is measured instantly<br>3MF / STEP / OBJ are measured by us after upload</div>
         <div class="fname" id="fname"></div>
@@ -67,19 +67,19 @@
 
       <div class="co-step">02 · PARAMETERS</div>
       <div class="field-row">
-        <div class="field"><label>INFILL</label><input type="range" class="slider" name="infill" min="10" max="100" step="5" value="20"><div class="slider-val"><span>HOLLOW</span><b id="infillVal">20%</b><span>SOLID</span></div></div>
-        <div class="field"><label>QUANTITY</label><input name="qty" type="number" min="1" max="999" value="1"><span class="hint">10+ units get 12% off</span></div>
+        <div class="field"><label for="f-infill">INFILL</label><input id="f-infill" type="range" class="slider" name="infill" min="10" max="100" step="5" value="20"><div class="slider-val"><span>HOLLOW</span><b id="infillVal">20%</b><span>SOLID</span></div></div>
+        <div class="field"><label for="f-qty">QUANTITY</label><input id="f-qty" name="qty" type="number" min="1" max="999" value="1"><span class="hint">10+ units get 12% off</span></div>
       </div>
       <div class="field-row">
-        <div class="field"><label>FINISH</label><select name="finish"><option value="raw">As printed</option><option value="sanded">Sanded & smoothed (+25%)</option><option value="painted">Primed & painted (+60%)</option></select></div>
-        <div class="field"><label>MODEL VOLUME (cm³)</label><input name="volumeCm3" type="number" min="0" step="0.1" placeholder="auto from STL"><span class="hint" id="dimsHint">Filled automatically when an STL is dropped</span></div>
+        <div class="field"><label for="f-finish">FINISH</label><select id="f-finish" name="finish"><option value="raw">As printed</option><option value="sanded">Sanded & smoothed (+25%)</option><option value="painted">Primed & painted (+60%)</option></select></div>
+        <div class="field"><label for="f-volumeCm3">MODEL VOLUME (cm³)</label><input id="f-volumeCm3" name="volumeCm3" type="number" min="0" step="0.1" placeholder="auto from STL"><span class="hint" id="dimsHint">Filled automatically when an STL is dropped</span></div>
       </div>
       <label class="check mb-2"><input type="checkbox" name="rush"> RUSH · next-day turnaround (+60%)</label>
 
       <div class="co-step">03 · CONTACT</div>
-      <div class="field-row"><div class="field"><label>NAME</label><input name="name" required autocomplete="name"></div><div class="field"><label>EMAIL</label><input name="email" type="email" required autocomplete="email"></div></div>
-      <div class="field-row"><div class="field"><label>PHONE (OPTIONAL)</label><input name="phone" type="tel"></div><div class="field"><label>ZIP · FOR DELIVERY ESTIMATE</label><input name="zip" inputmode="numeric" maxlength="5" placeholder="33063"></div></div>
-      <div class="field"><label>NOTES · what is it, what must it survive?</label><textarea name="notes" placeholder="e.g. replacement bracket for a boat hatch, needs to handle sun and salt water"></textarea></div>
+      <div class="field-row"><div class="field"><label for="f-name">NAME</label><input id="f-name" name="name" required autocomplete="name"></div><div class="field"><label for="f-email">EMAIL</label><input id="f-email" name="email" type="email" required autocomplete="email"></div></div>
+      <div class="field-row"><div class="field"><label for="f-phone">PHONE (OPTIONAL)</label><input id="f-phone" name="phone" type="tel"></div><div class="field"><label for="f-zip">ZIP · FOR DELIVERY ESTIMATE</label><input id="f-zip" name="zip" inputmode="numeric" maxlength="5" placeholder="33063"></div></div>
+      <div class="field"><label for="f-notes">NOTES · what is it, what must it survive?</label><textarea id="f-notes" name="notes" placeholder="e.g. replacement bracket for a boat hatch, needs to handle sun and salt water"></textarea></div>
       <button class="btn fill block" type="submit" id="qBtn" data-track="quote:submit">REQUEST FINAL QUOTE <span class="arr"></span></button>
     </form>
 

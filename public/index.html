@@ -245,7 +245,7 @@
         <div class="zone rv"><b>NATIONWIDE</b><span>All 50 states, 4–6 business days</span><em id="rNational">$22</em></div>
       </div>
       <form class="zip-check rv" id="zipForm">
-        <div class="field" style="margin:0;flex:1"><label>CHECK YOUR ZIP</label><input id="zipInput" inputmode="numeric" maxlength="5" placeholder="33063"></div>
+        <div class="field" style="margin:0;flex:1"><label for="zipInput">CHECK YOUR ZIP</label><input id="zipInput" inputmode="numeric" maxlength="5" placeholder="33063" aria-label="Your ZIP code, to check delivery"></div>
         <button class="btn sm" type="submit" data-track="delivery:zip-check">CHECK <span class="arr"></span></button>
       </form>
       <div class="zip-result mono" id="zipResult"></div>
@@ -323,8 +323,8 @@
       </div>
     </div>
     <form class="contact-form rv corners" id="contactForm"><span class="c"></span>
-      <div class="field-row"><div class="field"><label>NAME</label><input name="name" required></div><div class="field"><label>EMAIL</label><input name="email" type="email" required></div></div>
-      <div class="field"><label>MESSAGE</label><textarea name="message" required placeholder="What are you trying to make?"></textarea></div>
+      <div class="field-row"><div class="field"><label for="f-name">NAME</label><input id="f-name" name="name" required></div><div class="field"><label for="f-email">EMAIL</label><input id="f-email" name="email" type="email" required></div></div>
+      <div class="field"><label for="f-message">MESSAGE</label><textarea id="f-message" name="message" required placeholder="What are you trying to make?"></textarea></div>
       <button class="btn fill block" type="submit" data-track="contact:send">SEND MESSAGE <span class="arr"></span></button>
     </form>
   </div>
