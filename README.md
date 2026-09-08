@@ -22,7 +22,7 @@ order or editing content there is simulated. For the real thing, run the server 
 ## Run it
 
 ```
-cd "C:\Website project"
+cd "<path-to-this-project>"
 node server.js
 ```
 
