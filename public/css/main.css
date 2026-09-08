@@ -1,6 +1,5 @@
 /* LAYER ZERO — design system
    Dark technical / poster-brutalist: near-black ground, bone ink, signal red, mono HUD captions. */
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
 :root {
   --bg: #0b0b0c; --bg-2: #121214; --bg-3: #19191c; --panel: #151517;
