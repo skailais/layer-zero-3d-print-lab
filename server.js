@@ -393,7 +393,7 @@ route('PATCH', '/api/admin/quotes/:id', async (req, res, p) => {
   const b = await readBody(req, 8192); const list = store.read('quotes', []);
   const q = list.find(x => x.id === p.id); if (!q) throw Object.assign(new Error('Not found'), { status: 404 });
   if (b.status) q.status = clean(b.status).slice(0, 20); if (b.adminNote != null) q.adminNote = clean(b.adminNote);
-  if (b.finalPrice != null) q.finalPrice = +b.finalPrice;
+  if (b.finalPrice !== undefined) q.finalPrice = b.finalPrice === null ? null : +b.finalPrice;
   store.write('quotes', list); return { ok: true, quote: q };
 }, { admin: true });
 route('PATCH', '/api/admin/messages/:id', async (req, res, p) => {

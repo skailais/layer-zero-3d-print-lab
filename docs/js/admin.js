@@ -103,7 +103,7 @@
   $('#orderFilter').addEventListener('change', loadOrders);
   document.addEventListener('change', async e => {
     const el = e.target; if (!el.dataset.kind || !['orders', 'quotes'].includes(el.dataset.kind)) return;
-    const body = el.classList.contains('note') ? { adminNote: el.value } : el.name === 'finalPrice' ? { finalPrice: +el.value } : { status: el.value };
+    const body = el.classList.contains('note') ? { adminNote: el.value } : el.name === 'finalPrice' ? { finalPrice: el.value.trim() === '' ? null : +el.value } : { status: el.value };
     try { await api.send(`/api/admin/${el.dataset.kind}/${el.dataset.id}`, body, 'PATCH'); toast('SAVED ' + el.dataset.id); refreshBadges(); } catch (err) { toast(err.message, true); }
   });
 
