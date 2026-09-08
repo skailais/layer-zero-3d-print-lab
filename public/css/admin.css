@@ -14,7 +14,10 @@ body.admin { background: var(--bg); }
 .side-nav button b:empty { display: none; }
 .side-nav button:hover { color: var(--ink); background: var(--bg-3); }
 .side-nav button.active { color: var(--ink); border-color: var(--line-2); background: var(--bg-3); }
-.side-sep { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; color: var(--dim-2); padding: 14px 12px 6px; }
+/* --dim-2 is a line colour, not a text colour: at 9px on the sidebar it came
+   out at 1.9:1, a label you cannot read. --dim is what the brand tagline two
+   rules above already uses at this size, and clears 4.5 on this surface. */
+.side-sep { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; color: var(--dim); padding: 14px 12px 6px; }
 .side-foot { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
 .main { padding: 30px clamp(20px, 3vw, 44px) 80px; min-width: 0; }
 .th { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1px solid var(--line-2); }
