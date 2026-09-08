@@ -7,7 +7,6 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const url = require('url');
 
 const ROOT = __dirname;
 const PUBLIC = path.join(ROOT, 'public');
@@ -415,8 +414,15 @@ route('GET', '/api/admin/export/:col', (req, res, p) => {
 
 // ---------- server ----------
 async function handle(req, res) {
-  const u = url.parse(req.url);
-  const pathname = decodeURIComponent(u.pathname);
+  // WHATWG URL rather than url.parse: the legacy parser is deprecated
+  // (DEP0169) and its quirks have had security consequences. The base is a
+  // throwaway — only the path is used.
+  let pathname;
+  try {
+    pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+  } catch {
+    return send(res, 400, { error: 'Malformed URL' });
+  }
   if (pathname.startsWith('/api/')) {
     for (const r of routes) {
       if (r.method !== req.method) continue;
@@ -433,7 +439,10 @@ async function handle(req, res) {
   let file = pathname === '/' ? '/index.html' : pathname;
   if (!path.extname(file)) file += '.html';
   const abs = path.normalize(path.join(PUBLIC, file));
-  if (!abs.startsWith(PUBLIC)) return send(res, 403, 'Forbidden');
+  // Compare against PUBLIC + separator. A bare startsWith(PUBLIC) also matches
+  // any sibling whose name merely begins with "public", so /../public-old/x
+  // escaped the directory and was served with a 200.
+  if (abs !== PUBLIC && !abs.startsWith(PUBLIC + path.sep)) return send(res, 403, 'Forbidden');
   fs.readFile(abs, (err, data) => {
     if (err) {
       return fs.readFile(path.join(PUBLIC, '404.html'), (e2, d2) => send(res, 404, e2 ? 'Not found' : d2, { 'Content-Type': 'text/html; charset=utf-8' }));
