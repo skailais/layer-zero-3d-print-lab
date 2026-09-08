@@ -43,7 +43,7 @@
 @media (max-width: 900px) { .co-grid { grid-template-columns: 1fr; } }
 .co-form { background: var(--panel); border: 1px solid var(--line); padding: 36px 32px; }
 .co-form h3, .summary h3 { font-family: var(--display); font-size: 26px; letter-spacing: .03em; margin-bottom: 24px; }
-.co-step { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--red); margin: 30px 0 14px; display: flex; align-items: center; gap: 12px; }
+.co-step { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--red-text); margin: 30px 0 14px; display: flex; align-items: center; gap: 12px; }
 .co-step::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 .summary { position: sticky; top: 100px; background: var(--panel); border: 1px solid var(--line-2); padding: 30px 28px; }
 .summary .li { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
@@ -55,7 +55,7 @@
 .summary .eta b { color: var(--ink-2); font-weight: 400; }
 .confirm { text-align: center; padding: 60px 30px; border: 1px solid var(--red); background: var(--panel); position: relative; }
 .confirm .display { font-size: clamp(50px, 8vw, 110px); }
-.confirm .oid { font-family: var(--mono); font-size: 14px; letter-spacing: .3em; color: var(--red); margin: 14px 0 26px; }
+.confirm .oid { font-family: var(--mono); font-size: 14px; letter-spacing: .3em; color: var(--red-text); margin: 14px 0 26px; }
 .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 24px; }
 .timeline div { padding: 14px; border: 1px solid var(--line); font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); position: relative; }
 .timeline div.on { border-color: var(--ink); color: var(--ink); }
@@ -107,7 +107,7 @@
 .est-num span { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
 .est-total { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--line-2); padding-top: 16px; }
 .est-total b { font-family: var(--display); font-size: 54px; letter-spacing: .02em; transition: color .3s; }
-.est-total b.pulse { color: var(--red); }
+.est-total b.pulse { color: var(--red-text); }
 .est-note { font-size: 12px; color: var(--dim); margin-top: 14px; line-height: 1.6; }
 .faq { border-top: 1px solid var(--line-2); margin-top: 60px; }
 .faq details { border-bottom: 1px solid var(--line); }

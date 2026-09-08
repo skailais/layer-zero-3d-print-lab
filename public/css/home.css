@@ -85,7 +85,7 @@
 @media (max-width: 560px) { .zone { grid-template-columns: 1fr auto; } .zone span { grid-column: 1 / -1; } }
 .zip-check { display: flex; gap: 16px; align-items: flex-end; margin-top: 30px; }
 .zip-result { margin-top: 16px; min-height: 20px; color: var(--ink-2); line-height: 1.8; }
-.zip-result b { color: var(--red); }
+.zip-result b { color: var(--red-text); }
 .map-wrap { position: relative; border: 1px solid var(--line-2); }
 .map { width: 100%; height: auto; }
 .map .pulse { animation: pulse 2s ease-out infinite; transform-origin: 455px 430px; }

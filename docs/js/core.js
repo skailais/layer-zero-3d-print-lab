@@ -66,7 +66,7 @@
           <div><h2>Contact</h2><a id="fMail" href="mailto:orders@layerzero.print">orders@layerzero.print</a><a id="fPhone" href="tel:+19545550142">(954) 555-0142</a><p class="muted" style="font-size:12px;margin-top:14px">Local pickup & courier in Broward · Shipping across Florida and the US.</p></div>
         </div>
         <div class="big">LAYER ZERO</div>
-        <div class="bottom"><span>© ${new Date().getFullYear()} LAYER ZERO 3D PRINT LAB</span><span>MARGATE · FLORIDA · USA</span><span><a href="master.html" style="display:inline;margin:0;font-size:inherit;color:inherit;opacity:.6">MASTER</a></span></div>
+        <div class="bottom"><span>© ${new Date().getFullYear()} LAYER ZERO 3D PRINT LAB</span><span>MARGATE · FLORIDA · USA</span><span><a href="master.html" style="display:inline;margin:0;font-size:inherit;color:inherit">MASTER</a></span></div>
       </footer>`);
     content().then(c => { const b = c.business; if ($('#fAddr')) $('#fAddr').textContent = b.address; if ($('#fHours')) $('#fHours').textContent = b.hours; if ($('#fMail')) { $('#fMail').textContent = b.email; $('#fMail').href = 'mailto:' + b.email; } if ($('#fPhone')) { $('#fPhone').textContent = b.phone; $('#fPhone').href = 'tel:' + b.phone.replace(/\D/g, ''); } }).catch(() => { });
   }

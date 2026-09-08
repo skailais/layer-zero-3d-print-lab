@@ -4,9 +4,9 @@
 
 :root {
   --bg: #0b0b0c; --bg-2: #121214; --bg-3: #19191c; --panel: #151517;
-  --ink: #e9e7e1; --ink-2: #b9b6ae; --dim: #77756f; --dim-2: #46443f;
+  --ink: #e9e7e1; --ink-2: #b9b6ae; --dim: #83817b; --dim-2: #46443f;
   --line: rgba(233, 231, 225, .12); --line-2: rgba(233, 231, 225, .22);
-  --red: #c8102e; --red-2: #e8213f; --amber: #d98a3a;
+  --red: #c8102e; --red-2: #e8213f; --red-text: #fa3a55; --amber: #d98a3a;
   --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
   --sans: 'Inter Tight', 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
   --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Courier New', monospace;
@@ -111,7 +111,7 @@ body.cursor-hover .cursor-dot { opacity: 0; }
 .h-m { font-size: clamp(26px, 3vw, 44px); }
 .lead { font-size: clamp(17px, 1.4vw, 21px); color: var(--ink-2); font-weight: 300; line-height: 1.5; max-width: 56ch; }
 .muted { color: var(--dim); }
-.red { color: var(--red); }
+.red { color: var(--red-text); }
 .eyebrow { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); margin-bottom: 26px; }
 .eyebrow::before { content: ''; width: 34px; height: 1px; background: var(--red); }
 .eyebrow .n { color: var(--ink-2); }
@@ -148,7 +148,7 @@ body.cursor-hover .cursor-dot { opacity: 0; }
 .dotted { background-image: radial-gradient(var(--dim-2) 1px, transparent 1px); background-size: 10px 10px; }
 .checker { display: inline-block; width: 22px; height: 8px; background: repeating-conic-gradient(var(--ink) 0 25%, transparent 0 50%) 0 0 / 8px 8px; opacity: .6; }
 .tag { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--line-2); padding: 5px 9px; color: var(--ink-2); }
-.tag.red { border-color: var(--red); color: var(--red); }
+.tag.red { border-color: var(--red); color: var(--red-text); }
 .tag.fill { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
 /* ---------- buttons ---------- */
@@ -338,8 +338,19 @@ body.drawer-open .drawer { transform: none; }
 
 /* ---------- keyboard focus ---------- */
 :focus { outline: none; }
-:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
-.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline-offset: 1px; }
+/* --red-text rather than --red: a focus ring has to be seen against the ground
+   it sits on, and the brand red only reaches 2.98:1 there. */
+:focus-visible { outline: 2px solid var(--red-text); outline-offset: 3px; }
+
+/* The .field rule sets `outline: none` on the element itself. At (0,1,1) that
+   outranks the :focus-visible rule above at (0,1,0), so every input, select
+   and textarea inside a .field took keyboard focus with nothing to show for
+   it — nine stops on the quote form — and this rule was offsetting an outline
+   that was never drawn. It restores the ring explicitly. */
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+  outline: 2px solid var(--red-text);
+  outline-offset: 1px;
+}
 .skip { position: fixed; top: 8px; left: 8px; z-index: 10001; padding: 12px 18px; background: var(--ink); color: var(--bg);
   font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; transform: translateY(-200%); transition: transform .3s; }
 .skip:focus { transform: none; }

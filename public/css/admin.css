@@ -30,7 +30,7 @@ body.admin { background: var(--bg); }
 .kpi span { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--dim); text-transform: uppercase; display: block; margin-bottom: 8px; }
 .kpi b { font-family: var(--display); font-size: 34px; letter-spacing: .02em; font-weight: 400; display: block; line-height: 1; }
 .kpi small { font-family: var(--mono); font-size: 10px; color: var(--dim); display: block; margin-top: 8px; letter-spacing: .08em; }
-.kpi.hot b { color: var(--red); }
+.kpi.hot b { color: var(--red-text); }
 @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
 
@@ -77,7 +77,7 @@ body.admin { background: var(--bg); }
 .tbl .note { width: 100%; min-width: 160px; background: transparent; border: 1px solid var(--line); padding: 6px 8px; font-size: 12px; color: var(--ink); }
 .sel { background: var(--bg-2); border: 1px solid var(--line-2); color: var(--ink); padding: 8px 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .status { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; padding: 4px 8px; border: 1px solid var(--line-2); }
-.status.new { border-color: var(--red); color: var(--red); } .status.printing { border-color: var(--amber); color: var(--amber); } .status.ready, .status.shipped { border-color: var(--ink); color: var(--ink); } .status.delivered, .status.done { color: var(--dim); } .status.cancelled { color: var(--dim); text-decoration: line-through; }
+.status.new { border-color: var(--red); color: var(--red-text); } .status.printing { border-color: var(--amber); color: var(--amber); } .status.ready, .status.shipped { border-color: var(--ink); color: var(--ink); } .status.delivered, .status.done { color: var(--dim); } .status.cancelled { color: var(--dim); text-decoration: line-through; }
 
 /* messages */
 .msgs { display: grid; gap: 2px; }
@@ -98,7 +98,7 @@ body.admin { background: var(--bg); }
 .item .ctl { display: flex; align-items: center; gap: 8px; }
 .item .ctl button { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; padding: 8px 10px; border: 1px solid var(--line-2); color: var(--ink-2); transition: all .2s; }
 .item .ctl button:hover { color: var(--ink); border-color: var(--ink); }
-.item .ctl button.del:hover { color: var(--red); border-color: var(--red); }
+.item .ctl button.del:hover { color: var(--red-text); border-color: var(--red); }
 .switch { width: 36px; height: 20px; border: 1px solid var(--line-2); position: relative; cursor: pointer; }
 .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; background: var(--dim); transition: all .25s; }
 .switch.on { border-color: var(--red); } .switch.on::after { left: 19px; background: var(--red); }
