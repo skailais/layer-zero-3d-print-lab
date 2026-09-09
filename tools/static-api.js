@@ -31,18 +31,13 @@
     if (!/^\d{5}$/.test(zip)) return { zone: 'unknown', rate: null };
     const p = zip.slice(0, 3);
     let zone = 'national';
-    if ((d.pickupZips || []).includes(zip)) zone = 'pickup';
-    else if ((d.localZipPrefixes || []).includes(p)) zone = 'local';
+    if ((d.localZipPrefixes || []).includes(p)) zone = 'local';
     else if ((d.floridaZipPrefixes || []).includes(p)) zone = 'florida';
     const rates = d.rates || {};
-    return {
-      zone, rate: rates[zone === 'pickup' ? 'local' : zone],
-      pickupAvailable: zone === 'pickup' || zone === 'local',
-      eta: (d.eta || {})[zone], rates
-    };
+    return { zone, rate: rates[zone], eta: (d.eta || {})[zone], rates };
   }
 
-  function computeOrderTotals(items, zip, method, express) {
+  function computeOrderTotals(items, zip, express) {
     const products = D.products || [];
     let subtotal = 0; const lines = [];
     for (const it of items || []) {
@@ -56,15 +51,14 @@
     }
     const dz = deliveryZone(zip);
     const rates = (S.delivery || {}).rates || {};
-    let shipping = method === 'pickup' ? 0 : (dz.rate == null ? rates.national : dz.rate);
-    if (subtotal >= rates.freeOver && method !== 'pickup') shipping = 0;
-    if (express && method !== 'pickup') shipping += rates.expressSurcharge;
+    let shipping = dz.rate == null ? rates.national : dz.rate;
+    if (subtotal >= rates.freeOver) shipping = 0;
+    if (express) shipping += rates.expressSurcharge;
     const tax = +(subtotal * 0.07).toFixed(2);
     return {
       lines, subtotal: +subtotal.toFixed(2), shipping: +shipping.toFixed(2), tax,
       total: +(subtotal + shipping + tax).toFixed(2),
-      zone: method === 'pickup' ? 'pickup' : dz.zone,
-      eta: method === 'pickup' ? 'Pickup when ready' : dz.eta
+      zone: dz.zone, eta: dz.eta
     };
   }
 
@@ -104,17 +98,17 @@
     if (p === '/content') return json(D.content);
     if (p.startsWith('/delivery/')) return json(deliveryZone(seg[2]));
     if (p === '/track') return json({ ok: true });
-    if (p === '/cart/totals') return json(computeOrderTotals(body.items, body.zip, body.method, body.express));
+    if (p === '/cart/totals') return json(computeOrderTotals(body.items, body.zip, body.express));
 
     if (p === '/orders' && method === 'POST') {
-      const totals = computeOrderTotals(body.items, (body.customer || {}).zip, body.method, body.express);
+      const totals = computeOrderTotals(body.items, (body.customer || {}).zip, body.express);
       if (!totals.lines.length) return json({ error: 'Cart is empty' }, 400);
       const c = body.customer || {};
       if (!c.name || !c.email) return json({ error: 'Name and email are required' }, 400);
-      if (body.method !== 'pickup' && (!c.address || !c.zip)) return json({ error: 'Address and ZIP required for delivery' }, 400);
+      if (!c.address || !c.zip) return json({ error: 'Address and ZIP are required' }, 400);
       const order = {
         id: 'LZ-D' + Math.floor(100 + Math.random() * 900), ts: Date.now(), status: 'new',
-        customer: c, method: body.method === 'pickup' ? 'pickup' : 'delivery', express: !!body.express, totals, demo: true
+        customer: c, method: 'delivery', express: !!body.express, totals, demo: true
       };
       saveOrder(order);
       return json({ ok: true, order });

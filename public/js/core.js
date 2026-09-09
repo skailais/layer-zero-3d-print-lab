@@ -63,7 +63,7 @@
           <div><h2>Layer Zero · 3D Print Lab</h2><p id="fAddr">5400 W Atlantic Blvd, Margate, FL 33063</p><p id="fHours">Mon–Sat 09:00–19:00</p><p class="mono" style="margin-top:14px">26.2445° N / 80.2064° W</p></div>
           <div><h2>Navigate</h2>${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}<a href="/store#track">Track order</a></div>
           <div><h2>Services</h2><a href="/quote">Custom prints</a><a href="/quote">Design & CAD</a><a href="/quote">Batch production</a><a href="/showcase">Case studies</a></div>
-          <div><h2>Contact</h2><a id="fMail" href="mailto:orders@layerzero.print">orders@layerzero.print</a><a id="fPhone" href="tel:+19545550142">(954) 555-0142</a><p class="muted" style="font-size:12px;margin-top:14px">Local pickup & courier in Broward · Shipping across Florida and the US.</p></div>
+          <div><h2>Contact</h2><a id="fMail" href="mailto:orders@layerzero.print">orders@layerzero.print</a><a id="fPhone" href="tel:+19545550142">(954) 555-0142</a><p class="muted" style="font-size:12px;margin-top:14px">Courier delivery in Broward · Shipping across Florida and the US.</p></div>
         </div>
         <div class="big">LAYER ZERO</div>
         <div class="bottom"><span>© ${new Date().getFullYear()} LAYER ZERO 3D PRINT LAB</span><span>MARGATE · FLORIDA · USA</span><span><a href="/master" style="display:inline;margin:0;font-size:inherit;color:inherit">MASTER</a></span></div>

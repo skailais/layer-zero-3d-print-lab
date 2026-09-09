@@ -62,11 +62,12 @@ finish and rush change. Submitting stores the request and uploads the file for t
 
 ## Delivery model
 
-The facility is in Margate, so everything is priced from the customer's ZIP code.
+Everything is delivered — there is no collection at the lab. The facility is in
+Margate, so every order is priced from the customer's ZIP code, and an address
+is required to place one.
 
 | Zone | Who | Rate | ETA |
 |---|---|---|---|
-| Pickup | Margate ZIPs (33063, 33068, 33093) | Free | Same day when ready |
 | Local courier | Broward, Miami-Dade, Palm Beach (ZIP 330–334) | $9 | Next business day |
 | Florida | Rest of the state | $14 | 2–3 business days |
 | Nationwide | All 50 states | $22 | 4–6 business days |

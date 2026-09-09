@@ -32,7 +32,7 @@ const now = Date.now();
 const FIRST = ['Marcus', 'Dana', 'Kevin', 'Priya', 'Luis', 'Sam', 'Alicia', 'Tom', 'Renee', 'Jorge', 'Nina', 'Wes', 'Ivy', 'Carl', 'Maya', 'Owen', 'Bianca', 'Ray', 'Tessa', 'Hugo'];
 const LAST = ['T.', 'R.', 'O.', 'S.', 'F.', 'M.', 'K.', 'B.', 'D.', 'L.', 'G.', 'V.', 'W.', 'P.', 'C.'];
 const PLACES = [
-  ['Margate', '33063', 'pickup'], ['Coconut Creek', '33073', 'local'], ['Coral Springs', '33065', 'local'],
+  ['Margate', '33063', 'local'], ['Coconut Creek', '33073', 'local'], ['Coral Springs', '33065', 'local'],
   ['Fort Lauderdale', '33301', 'local'], ['Miami', '33131', 'local'], ['Boca Raton', '33432', 'local'],
   ['Orlando', '32801', 'florida'], ['Tampa', '33602', 'florida'], ['Jacksonville', '32202', 'florida'],
   ['Atlanta', '30301', 'national'], ['Austin', '78701', 'national'], ['Denver', '80202', 'national'],
@@ -99,7 +99,7 @@ for (let d = DAYS - 1; d >= 0; d--) {
     }
 
     // zip check on home / delivery interest
-    if (rnd() < 0.22) { t += 15000; ev(t, 'zip_check', '/', pick(['pickup', 'local', 'florida', 'national']), undefined, sid, '', device); }
+    if (rnd() < 0.22) { t += 15000; ev(t, 'zip_check', '/', pick(['local', 'florida', 'national']), undefined, sid, '', device); }
 
     // store funnel
     if (rnd() < 0.42) {
@@ -115,8 +115,7 @@ for (let d = DAYS - 1; d >= 0; d--) {
           if (rnd() < 0.5) {
             // real order
             const [city, zip, zone] = pick(PLACES);
-            const method = zone === 'pickup' && rnd() < 0.7 ? 'pickup' : 'delivery';
-            const express = method !== 'pickup' && rnd() < 0.16;
+            const express = rnd() < 0.16;
             const lines = [];
             const n = rnd() < 0.68 ? 1 : 2;
             for (let i = 0; i < n; i++) {
@@ -126,15 +125,15 @@ for (let d = DAYS - 1; d >= 0; d--) {
               lines.push({ id: pr.id, name: pr.name, variant: variant ? variant.name : null, price: +(pr.price + (variant ? variant.delta || 0 : 0)).toFixed(2), qty, image: pr.image });
             }
             const subtotal = +lines.reduce((s, l) => s + l.price * l.qty, 0).toFixed(2);
-            const rates = { pickup: 0, local: 9, florida: 14, national: 22 };
-            let shipping = method === 'pickup' ? 0 : rates[zone] || 22;
-            if (subtotal >= 150 && method !== 'pickup') shipping = 0;
+            const rates = { local: 9, florida: 14, national: 22 };
+            let shipping = rates[zone] || 22;
+            if (subtotal >= 150) shipping = 0;
             if (express) shipping += 25;
             const tax = +(subtotal * 0.07).toFixed(2);
-            const eta = { pickup: 'Pickup when ready', local: 'Next business day', florida: '2–3 business days', national: '4–6 business days' }[method === 'pickup' ? 'pickup' : zone];
+            const eta = { local: 'Next business day', florida: '2–3 business days', national: '4–6 business days' }[zone];
             const age = d;
             const status = age > 8 ? (rnd() < 0.9 ? 'delivered' : 'cancelled')
-              : age > 5 ? (method === 'pickup' ? 'delivered' : 'shipped')
+              : age > 5 ? 'shipped'
                 : age > 3 ? 'ready' : age > 1 ? 'printing' : 'new';
             const first = pick(FIRST);
             t += int(60, 300) * 1000;
@@ -145,8 +144,8 @@ for (let d = DAYS - 1; d >= 0; d--) {
                 phone: '(954) 555-0' + int(100, 199), address: int(100, 4800) + ' ' + pick(['NW 8th St', 'Palm Ave', 'Coral Way', 'Ocean Dr', 'Sample Rd', 'Atlantic Blvd']),
                 city, zip, notes: rnd() < 0.25 ? pick(['Gift wrap if possible.', 'Leave with the front desk.', 'Call on arrival.']) : ''
               },
-              method, express,
-              totals: { lines, subtotal, shipping: +shipping.toFixed(2), tax, total: +(subtotal + shipping + tax).toFixed(2), zone: method === 'pickup' ? 'pickup' : zone, eta },
+              method: 'delivery', express,
+              totals: { lines, subtotal, shipping: +shipping.toFixed(2), tax, total: +(subtotal + shipping + tax).toFixed(2), zone, eta },
               sid
             };
             orders.push(order);

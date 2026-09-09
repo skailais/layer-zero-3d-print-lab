@@ -47,15 +47,14 @@
       clearTimeout(calcTimer); calcTimer = setTimeout(calc, 250);
     }
     async function calc() {
-      const method = form.method.value, zip = form.zip.value.trim(), express = form.express.checked;
-      $('#addrBlock').style.display = method === 'pickup' ? 'none' : '';
+      const zip = form.zip.value.trim(), express = form.express.checked;
       try {
-        totals = await api.send('/api/cart/totals', { items: cart.items.map(i => ({ id: i.id, qty: i.qty, variant: i.variant })), zip, method, express });
+        totals = await api.send('/api/cart/totals', { items: cart.items.map(i => ({ id: i.id, qty: i.qty, variant: i.variant })), zip, express });
         $('#sSub').textContent = fmt(totals.subtotal); $('#sTax').textContent = fmt(totals.tax); $('#sTot').textContent = fmt(totals.total);
-        $('#sShip').textContent = method === 'pickup' ? 'FREE PICKUP' : (!/^\d{5}$/.test(zip) ? 'ENTER ZIP' : (totals.shipping === 0 ? 'FREE' : fmt(totals.shipping)));
-        const zoneNames = { pickup: 'PICKUP ZONE · courier available', local: 'LOCAL COURIER ZONE', florida: 'FLORIDA SHIPPING', national: 'NATIONWIDE SHIPPING', unknown: '' };
-        $('#zoneNote').textContent = method === 'pickup' ? '' : (/^\d{5}$/.test(zip) ? `ZIP ${zip} → ${zoneNames[totals.zone]} · ETA ${totals.eta || ''}${totals.subtotal >= rates.freeOver ? ' · FREE SHIPPING APPLIED' : ''}` : (zip ? 'ENTER A 5-DIGIT ZIP' : `Free shipping on orders over ${fmt(rates.freeOver)}`));
-        $('#sEta').innerHTML = method === 'pickup' ? 'PICKUP · <b>Margate lab · ready in 1–5 days</b>' : (totals.eta ? `ESTIMATED DELIVERY · <b>${esc(totals.eta)}</b>` : 'ENTER ZIP FOR ETA');
+        $('#sShip').textContent = !/^\d{5}$/.test(zip) ? 'ENTER ZIP' : (totals.shipping === 0 ? 'FREE' : fmt(totals.shipping));
+        const zoneNames = { local: 'LOCAL COURIER ZONE', florida: 'FLORIDA SHIPPING', national: 'NATIONWIDE SHIPPING', unknown: '' };
+        $('#zoneNote').textContent = /^\d{5}$/.test(zip) ? `ZIP ${zip} → ${zoneNames[totals.zone]} · ETA ${totals.eta || ''}${totals.subtotal >= rates.freeOver ? ' · FREE SHIPPING APPLIED' : ''}` : (zip ? 'ENTER A 5-DIGIT ZIP' : `Free shipping on orders over ${fmt(rates.freeOver)}`);
+        $('#sEta').innerHTML = totals.eta ? `ESTIMATED DELIVERY · <b>${esc(totals.eta)}</b>` : 'ENTER ZIP FOR ETA';
       } catch (e) { $('#zoneNote').textContent = e.message; }
     }
     form.addEventListener('input', () => { clearTimeout(calcTimer); calcTimer = setTimeout(calc, 300); });
@@ -64,19 +63,19 @@
       e.preventDefault();
       const f = form; let ok = true;
       $$('.field', f).forEach(x => x.classList.remove('err'));
-      const need = ['name', 'email'].concat(f.method.value === 'pickup' ? [] : ['address', 'city', 'zip']);
+      const need = ['name', 'email', 'address', 'city', 'zip'];
       need.forEach(n => { if (!f[n].value.trim()) { f[n].closest('.field').classList.add('err'); ok = false; } });
       if (!ok) { toast('FILL THE HIGHLIGHTED FIELDS', true); return; }
       const btn = $('#placeBtn'); btn.disabled = true;
       try {
-        const r = await api.send('/api/orders', { items: cart.items.map(i => ({ id: i.id, qty: i.qty, variant: i.variant })), method: f.method.value, express: f.express.checked, sid,
+        const r = await api.send('/api/orders', { items: cart.items.map(i => ({ id: i.id, qty: i.qty, variant: i.variant })), express: f.express.checked, sid,
           customer: { name: f.name.value, email: f.email.value, phone: f.phone.value, address: f.address.value, city: f.city.value, zip: f.zip.value, notes: f.notes.value } });
         cart.clear(); form.reset();
         const o = r.order;
         $('#coGrid').classList.add('hidden'); $('#coEmpty').classList.add('hidden');
         const c = $('#confirm'); c.classList.remove('hidden');
         c.innerHTML = `<div class="mono red mb-2">ORDER RECEIVED</div><div class="display">THANK YOU</div><div class="oid">${esc(o.id)}</div>
-          <p class="lead" style="margin:0 auto 20px">${o.method === 'pickup' ? 'We will email you when it is ready for pickup at the Margate lab.' : `Shipping to ${esc(o.customer.city || '')} ${esc(o.customer.zip)} · estimated ${esc(o.totals.eta || '')}.`} Total ${fmt(o.totals.total)}.</p>
+          <p class="lead" style="margin:0 auto 20px">Delivering to ${esc(o.customer.city || '')} ${esc(o.customer.zip)} · estimated ${esc(o.totals.eta || '')}. Total ${fmt(o.totals.total)}.</p>
           <div class="flex gap wrapf" style="justify-content:center"><a href="#track" class="btn sm" id="trackNow">TRACK THIS ORDER</a><a href="#catalog" class="btn sm">KEEP SHOPPING</a></div>`;
         c.classList.add('in'); c.scrollIntoView({ behavior: 'smooth', block: 'center' });
         $('#trackNow').addEventListener('click', () => { $('#trackId').value = o.id; setTimeout(() => $('#trackForm').requestSubmit(), 500); });
@@ -94,6 +93,7 @@
       try {
         const o = await api.get('/api/orders/' + encodeURIComponent(id));
         const idx = STEPS.indexOf(o.status);
+        // pickup is no longer offered, but orders placed when it was still track correctly
         const labels = o.method === 'pickup' ? ['RECEIVED', 'PRINTING', 'READY FOR PICKUP', 'COLLECTED'] : ['RECEIVED', 'PRINTING', 'PACKED', 'SHIPPED', 'DELIVERED'];
         const keys = o.method === 'pickup' ? ['new', 'printing', 'ready', 'delivered'] : STEPS;
         const cur = keys.indexOf(o.status);

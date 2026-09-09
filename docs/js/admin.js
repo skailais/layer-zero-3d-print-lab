@@ -95,7 +95,7 @@
       <td><div class="id">${esc(o.id)}</div><div class="sm">${when(o.ts)}</div></td>
       <td>${esc(o.customer.name)}<div class="sm">${esc(o.customer.email)}${o.customer.phone ? ' · ' + esc(o.customer.phone) : ''}</div>${o.customer.notes ? `<div class="sm">“${esc(o.customer.notes)}”</div>` : ''}</td>
       <td>${o.totals.lines.map(l => `${esc(l.name)}${l.variant ? ' (' + esc(l.variant) + ')' : ''} × ${l.qty}`).join('<br>')}</td>
-      <td>${o.method === 'pickup' ? 'PICKUP' : `DELIVERY · ${esc(o.totals.zone).toUpperCase()}${o.express ? ' · EXPRESS' : ''}<div class="sm">${esc(o.customer.address)}, ${esc(o.customer.city)} ${esc(o.customer.zip)}</div>`}</td>
+      <td>${o.method === 'pickup' ? 'PICKUP (legacy)' : `DELIVERY · ${esc(o.totals.zone).toUpperCase()}${o.express ? ' · EXPRESS' : ''}<div class="sm">${esc(o.customer.address)}, ${esc(o.customer.city)} ${esc(o.customer.zip)}</div>`}</td>
       <td>${fmt(o.totals.total)}<div class="sm">ship ${fmt(o.totals.shipping)} · tax ${fmt(o.totals.tax)}</div></td>
       <td><select class="sel" data-id="${esc(o.id)}" data-kind="orders">${ORDER_STATUS.map(s => `<option ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
       <td><input class="note" data-id="${esc(o.id)}" data-kind="orders" value="${esc(o.adminNote || '')}" placeholder="internal note"></td></tr>`).join('') || '<tr><td colspan="7" class="empty">NO ORDERS YET</td></tr>');
@@ -197,10 +197,10 @@
   async function loadSettings() {
     const s = await api.get('/api/admin/settings');
     const fill = (form, obj) => Object.entries(obj).forEach(([k, v]) => { if (form[k]) form[k].value = Array.isArray(v) ? v.join(', ') : v; });
-    fill($('#fBusiness'), s.business); fill($('#fDelivery'), Object.assign({}, s.delivery.rates, { pickupZips: s.delivery.pickupZips, localZipPrefixes: s.delivery.localZipPrefixes })); fill($('#fPricing'), s.pricing);
+    fill($('#fBusiness'), s.business); fill($('#fDelivery'), Object.assign({}, s.delivery.rates, { localZipPrefixes: s.delivery.localZipPrefixes })); fill($('#fPricing'), s.pricing);
   }
   $('#fBusiness').onsubmit = async e => { e.preventDefault(); const f = e.target; await api.send('/api/admin/settings', { business: { name: f.name.value, tagline: f.tagline.value, address: f.address.value, phone: f.phone.value, email: f.email.value, hours: f.hours.value } }, 'PUT'); toast('BUSINESS SAVED'); };
-  $('#fDelivery').onsubmit = async e => { e.preventDefault(); const f = e.target; const s = await api.get('/api/admin/settings'); const d = s.delivery; d.rates = { pickup: 0, local: +f.local.value, florida: +f.florida.value, national: +f.national.value, expressSurcharge: +f.expressSurcharge.value, freeOver: +f.freeOver.value }; d.pickupZips = f.pickupZips.value.split(',').map(x => x.trim()).filter(Boolean); d.localZipPrefixes = f.localZipPrefixes.value.split(',').map(x => x.trim()).filter(Boolean); await api.send('/api/admin/settings', { delivery: d }, 'PUT'); toast('DELIVERY SAVED'); };
+  $('#fDelivery').onsubmit = async e => { e.preventDefault(); const f = e.target; const s = await api.get('/api/admin/settings'); const d = s.delivery; d.rates = { local: +f.local.value, florida: +f.florida.value, national: +f.national.value, expressSurcharge: +f.expressSurcharge.value, freeOver: +f.freeOver.value }; delete d.pickupZips; d.localZipPrefixes = f.localZipPrefixes.value.split(',').map(x => x.trim()).filter(Boolean); await api.send('/api/admin/settings', { delivery: d }, 'PUT'); toast('DELIVERY SAVED'); };
   $('#fPricing').onsubmit = async e => { e.preventDefault(); const f = e.target; const p = {}; ['pla', 'petg', 'abs', 'tpu', 'nylon', 'resin', 'minOrder', 'setupFee', 'rush'].forEach(k => p[k] = +f[k].value); await api.send('/api/admin/settings', { pricing: p }, 'PUT'); toast('PRICING SAVED'); };
   $('#fPassword').onsubmit = async e => { e.preventDefault(); const f = e.target; try { await api.send('/api/admin/password', { current: f.current.value, next: f.next.value }); toast('PASSWORD CHANGED'); f.reset(); } catch (err) { toast(err.message, true); } };
 

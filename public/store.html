@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap">
 <title>Store — LAYER ZERO 3D Print Lab, Margate FL</title>
-<meta name="description" content="Ready-made 3D printed goods from Margate, Florida. Pickup at the lab, courier in Broward, shipping across Florida and the US.">
+<meta name="description" content="Ready-made 3D printed goods from Margate, Florida. Courier delivery in Broward, tracked shipping across Florida and the US.">
 <link rel="canonical" href="https://skailais.github.io/layer-zero-3d-print-lab/store.html">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:type" content="website">
@@ -15,14 +15,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://skailais.github.io/layer-zero-3d-print-lab/store.html">
 <meta property="og:title" content="Store — LAYER ZERO 3D Print Lab, Margate FL">
-<meta property="og:description" content="Ready-made 3D printed goods from Margate, Florida. Pickup at the lab, courier in Broward, shipping across Florida and the US.">
+<meta property="og:description" content="Ready-made 3D printed goods from Margate, Florida. Courier delivery in Broward, tracked shipping across Florida and the US.">
 <meta property="og:image" content="https://skailais.github.io/layer-zero-3d-print-lab/assets/og-store.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LAYER ZERO — printed objects ready to ship.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Store — LAYER ZERO 3D Print Lab, Margate FL">
-<meta name="twitter:description" content="Ready-made 3D printed goods from Margate, Florida. Pickup at the lab, courier in Broward, shipping across Florida and the US.">
+<meta name="twitter:description" content="Ready-made 3D printed goods from Margate, Florida. Courier delivery in Broward, tracked shipping across Florida and the US.">
 <meta name="twitter:image" content="https://skailais.github.io/layer-zero-3d-print-lab/assets/og-store.png">
 <meta name="twitter:image:alt" content="LAYER ZERO — printed objects ready to ship.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='%23e9e7e1'/%3E%3Cpath d='M16 12l4 4-4 4-4-4z' fill='%23c8102e'/%3E%3C/svg%3E">
@@ -44,9 +44,9 @@
     <div>
       <div class="eyebrow"><span class="n">03</span> STORE · PRINTED GOODS</div>
       <h1 class="display h-xl split">Objects ready to ship.</h1>
-      <p class="lead rv mt-2" style="--d:.2s">Designed and printed in-house, made to order in 1–5 days. Free pickup in Margate, courier across South Florida, tracked shipping everywhere else.</p>
+      <p class="lead rv mt-2" style="--d:.2s">Designed and printed in-house, made to order in 1–5 days. Courier across South Florida, tracked shipping everywhere else — delivered to your door.</p>
     </div>
-    <div class="hud rv" style="--d:.3s">CATALOG · <b id="cnt">00</b> SKU<br>FREE SHIPPING OVER <b id="freeOver">$150</b><br>PICKUP: <b>FREE · MARGATE FL</b><br>MADE TO ORDER · 1–5 DAYS</div>
+    <div class="hud rv" style="--d:.3s">CATALOG · <b id="cnt">00</b> SKU<br>FREE SHIPPING OVER <b id="freeOver">$150</b><br>DELIVERY ONLY · NO COLLECTION<br>MADE TO ORDER · 1–5 DAYS</div>
   </div>
 </section>
 
@@ -61,7 +61,7 @@
 <!-- ================= CHECKOUT ================= -->
 <section class="section checkout" id="checkout">
   <div class="wrap">
-    <div class="eyebrow"><span class="n">CHECKOUT</span> PICKUP OR DELIVERY</div>
+    <div class="eyebrow"><span class="n">CHECKOUT</span> DELIVERY</div>
     <h2 class="display h-l split mb-3">Where should it go?</h2>
     <div id="coEmpty" class="empty-note" style="text-align:left;padding:30px 0">Your cart is empty. Add something from the catalog above.</div>
     <div class="co-grid" id="coGrid">
@@ -69,19 +69,14 @@
         <h3>DETAILS</h3>
         <div class="field-row"><div class="field"><label for="f-name">FULL NAME</label><input id="f-name" name="name" required autocomplete="name"></div><div class="field"><label for="f-email">EMAIL</label><input id="f-email" name="email" type="email" required autocomplete="email"></div></div>
         <div class="field"><label for="f-phone">PHONE (OPTIONAL)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
-        <div class="co-step">01 · FULFILMENT</div>
-        <div class="radio-tiles" id="methodTiles">
-          <label><input type="radio" name="method" value="delivery" checked><b>DELIVERY</b><small>Courier or tracked shipping, rate by ZIP</small></label>
-          <label><input type="radio" name="method" value="pickup"><b>PICKUP AT THE LAB</b><small>Free · Margate, FL · same day when ready</small></label>
-        </div>
         <div id="addrBlock">
-          <div class="co-step">02 · ADDRESS</div>
-          <div class="field"><label for="f-address">STREET ADDRESS</label><input id="f-address" name="address" autocomplete="street-address"></div>
-          <div class="field-row"><div class="field"><label for="f-city">CITY</label><input id="f-city" name="city" autocomplete="address-level2"></div><div class="field"><label for="f-zip">ZIP</label><input id="f-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="33063"></div></div>
+          <div class="co-step">01 · DELIVERY ADDRESS</div>
+          <div class="field"><label for="f-address">STREET ADDRESS</label><input id="f-address" name="address" required autocomplete="street-address"></div>
+          <div class="field-row"><div class="field"><label for="f-city">CITY</label><input id="f-city" name="city" required autocomplete="address-level2"></div><div class="field"><label for="f-zip">ZIP</label><input id="f-zip" name="zip" required inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="33063"></div></div>
           <div class="mono ink" id="zoneNote" style="min-height:18px;margin-bottom:16px"></div>
           <label class="check"><input type="checkbox" name="express"> EXPRESS · priority print queue + expedited carrier <span id="expressFee">+$25</span></label>
         </div>
-        <div class="co-step">03 · NOTES</div>
+        <div class="co-step">02 · NOTES</div>
         <div class="field"><label for="f-notes">ANYTHING WE SHOULD KNOW?</label><textarea id="f-notes" name="notes" placeholder="Colour preferences, gate codes, gift note…"></textarea></div>
         <button class="btn fill block mt-2" type="submit" id="placeBtn" data-track="checkout:place-order">PLACE ORDER <span class="arr"></span></button>
         <p class="muted mt-2" style="font-size:12px">Demo checkout: no payment is collected. In production this step hands off to Stripe / PayPal.</p>

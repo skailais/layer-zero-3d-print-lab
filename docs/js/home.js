@@ -8,7 +8,7 @@
     const d = new Date(); $('#hudDate').textContent = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getFullYear()).slice(2)}`;
 
     // ---------- marquees ----------
-    const items1 = ['FDM · SLA · NYLON CF', 'SAME-DAY PICKUP IN MARGATE', 'COURIER ACROSS BROWARD', 'SHIPPING TO ALL 50 STATES', 'INSTANT QUOTES', '0.05 MM LAYERS', 'CAD & REVERSE ENGINEERING', 'SMALL-BATCH PRODUCTION'];
+    const items1 = ['FDM · SLA · NYLON CF', 'DELIVERED TO YOUR DOOR', 'COURIER ACROSS BROWARD', 'SHIPPING TO ALL 50 STATES', 'INSTANT QUOTES', '0.05 MM LAYERS', 'CAD & REVERSE ENGINEERING', 'SMALL-BATCH PRODUCTION'];
     $('#marquee1').innerHTML = items1.concat(items1).map(t => `<span>${t}</span>`).join('');
     const items2 = ['UPLOAD', 'QUOTE', 'PRINT', 'DELIVER'];
     $('#marquee2').innerHTML = items2.concat(items2, items2).map(t => `<span>${t}</span>`).join('');
@@ -106,11 +106,11 @@
       if (!/^\d{5}$/.test(zip)) { out.innerHTML = 'ENTER A 5-DIGIT US ZIP'; return; }
       try {
         const r = await api.get('/api/delivery/' + zip);
-        const names = { pickup: 'PICKUP ZONE', local: 'LOCAL COURIER', florida: 'FLORIDA SHIPPING', national: 'NATIONWIDE SHIPPING' };
-        out.innerHTML = `ZIP ${zip} → <b>${names[r.zone] || r.zone}</b><br>RATE: ${r.zone === 'pickup' ? 'FREE PICKUP · COURIER ' + fmt(r.rate) : fmt(r.rate)} · ETA: ${esc(r.eta)}<br>FREE SHIPPING ON ORDERS OVER ${fmt(r.rates.freeOver)}`;
+        const names = { local: 'LOCAL COURIER', florida: 'FLORIDA SHIPPING', national: 'NATIONWIDE SHIPPING' };
+        out.innerHTML = `ZIP ${zip} → <b>${names[r.zone] || r.zone}</b><br>RATE: ${fmt(r.rate)} · ETA: ${esc(r.eta)}<br>FREE SHIPPING ON ORDERS OVER ${fmt(r.rates.freeOver)}`;
         track('zip_check', r.zone);
         const rings = $$('#rings circle'); rings.forEach(c => c.classList.remove('hl'));
-        const idx = { pickup: 2, local: 2, florida: 1, national: 0 }[r.zone]; if (rings[idx]) rings[idx].classList.add('hl');
+        const idx = { local: 2, florida: 1, national: 0 }[r.zone]; if (rings[idx]) rings[idx].classList.add('hl');
       } catch (err) { out.textContent = err.message; }
     });
 

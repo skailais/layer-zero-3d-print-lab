@@ -6,7 +6,8 @@ let fails = 0;
 const ok = (n, c, extra = '') => { if (!c) fails++; console.log((c ? 'PASS ' : 'FAIL ') + n + (extra ? ' -> ' + extra : '')); };
 (async () => {
   let r = await j('/api/content'); ok('content', r.s === 200 && r.d.products.length >= 8 && r.d.showcase.length >= 8 && r.d.reviews.length >= 5);
-  r = await j('/api/delivery/33063'); ok('zone pickup', r.d.zone === 'pickup', JSON.stringify(r.d));
+  // 33063 was a pickup ZIP; with delivery only it is priced as local courier
+  r = await j('/api/delivery/33063'); ok('zone local (former pickup ZIP)', r.d.zone === 'local' && r.d.rate === 9, JSON.stringify(r.d));
   r = await j('/api/delivery/33131'); ok('zone local', r.d.zone === 'local');
   r = await j('/api/delivery/32801'); ok('zone florida', r.d.zone === 'florida');
   r = await j('/api/delivery/30301'); ok('zone national', r.d.zone === 'national');
@@ -17,9 +18,9 @@ const ok = (n, c, extra = '') => { if (!c) fails++; console.log((c ? 'PASS ' : '
   ok('free shipping over 150', r.d.shipping === 0 && r.d.subtotal === 180, JSON.stringify(r.d));
   r = await j('/api/orders', { method: 'POST', body: JSON.stringify({ items: [{ id: 'p01', qty: 1, variant: 'Signal Red' }, { id: 'p05', qty: 1 }], method: 'delivery', express: false, sid: 'test-sid', customer: { name: 'Test Buyer', email: 'buyer@example.com', address: '1 Palm Ave', city: 'Orlando', zip: '32801' } }) });
   ok('order create', r.s === 200 && r.d.order.id.startsWith('LZ-'), r.d.order && r.d.order.id + ' ' + r.d.order.totals.total); const oid = r.d.order && r.d.order.id;
-  r = await j('/api/orders', { method: 'POST', body: JSON.stringify({ items: [{ id: 'p02', qty: 1 }], method: 'pickup', sid: 'test-sid2', customer: { name: 'Local Pickup', email: 'pick@example.com' } }) });
-  ok('order pickup', r.s === 200 && r.d.order.totals.shipping === 0, r.d.order && r.d.order.id);
-  r = await j('/api/orders', { method: 'POST', body: JSON.stringify({ items: [], method: 'pickup', customer: { name: 'x', email: 'y' } }) }); ok('order empty rejected', r.s === 400);
+  r = await j('/api/orders', { method: 'POST', body: JSON.stringify({ items: [{ id: 'p02', qty: 1 }], sid: 'test-sid2', customer: { name: 'No Address', email: 'noaddr@example.com' } }) });
+  ok('order without an address rejected', r.s === 400, JSON.stringify(r.d));
+  r = await j('/api/orders', { method: 'POST', body: JSON.stringify({ items: [], customer: { name: 'x', email: 'y', address: '1 A St', zip: '33063' } }) }); ok('order empty rejected', r.s === 400);
   r = await j('/api/orders/' + oid); ok('order lookup', r.s === 200 && r.d.status === 'new');
   r = await j('/api/quotes/estimate', { method: 'POST', body: JSON.stringify({ material: 'petg', infill: 30, qty: 3, volumeCm3: 45, finish: 'sanded' }) }); ok('estimate', r.d.total > 15, JSON.stringify(r.d));
   const stl = Buffer.alloc(84 + 50 * 12); stl.writeUInt32LE(12, 80); // 12-triangle 10mm cube
@@ -43,7 +44,7 @@ const ok = (n, c, extra = '') => { if (!c) fails++; console.log((c ? 'PASS ' : '
   r = await j('/api/admin/showcase/reorder', { method: 'POST', body: JSON.stringify({ ids: ['sc08', 'sc01'] }) }); r = await j('/api/content'); ok('reorder', r.d.showcase[0].id === 'sc08');
   await j('/api/admin/showcase/reorder', { method: 'POST', body: JSON.stringify({ ids: ['sc01', 'sc02', 'sc03', 'sc04', 'sc05', 'sc06', 'sc07', 'sc08'] }) });
   r = await j('/api/admin/upload', { method: 'POST', body: JSON.stringify({ data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' }) }); ok('upload', r.s === 200 && r.d.url.startsWith('/uploads/'));
-  r = await j('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ delivery: { rates: { pickup: 0, local: 9, florida: 14, national: 22, expressSurcharge: 25, freeOver: 150 } } }) }); ok('settings save', r.s === 200);
+  r = await j('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ delivery: { rates: { local: 9, florida: 14, national: 22, expressSurcharge: 25, freeOver: 150 } } }) }); ok('settings save', r.s === 200);
   r = await j('/api/admin/settings'); ok('settings read', r.d.delivery.rates.local === 9 && !!r.d.business.name);
   r = await j('/api/admin/logout', { method: 'POST' }); r = await j('/api/admin/me'); ok('logout', r.d.admin === false);
   r = await j('/nope'); ok('404 page', r.s === 404);

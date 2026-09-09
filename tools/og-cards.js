@@ -16,7 +16,7 @@ const OUT = path.join(__dirname, '..', 'public', 'assets');
 const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
 const CARDS = [
-  { file: 'og-home.png', eyebrow: '01 · 3D PRINT LAB · MARGATE, FLORIDA', line1: 'IDEAS INTO', line2: 'OBJECTS.', foot: 'FDM · SLA · NYLON CF — PICKUP, COURIER, SHIPPING' },
+  { file: 'og-home.png', eyebrow: '01 · 3D PRINT LAB · MARGATE, FLORIDA', line1: 'IDEAS INTO', line2: 'OBJECTS.', foot: 'FDM · SLA · NYLON CF — COURIER & TRACKED SHIPPING' },
   { file: 'og-quote.png', eyebrow: '04 · INSTANT ESTIMATE · HUMAN-CONFIRMED', line1: 'DROP A FILE.', line2: 'GET A NUMBER.', foot: 'STL · 3MF · STEP · OBJ — REPLY WITHIN 1 BUSINESS HOUR' },
   { file: 'og-showcase.png', eyebrow: '02 · SHOWCASE · WHAT CAME OFF THE PLATE', line1: 'SELECTED', line2: 'WORK.', foot: 'ARCHITECTURE · ENGINEERING · SCULPTURE · BATCH' },
   { file: 'og-store.png', eyebrow: '03 · STORE · PRINTED GOODS', line1: 'OBJECTS READY', line2: 'TO SHIP.', foot: 'MADE TO ORDER IN 1–5 DAYS — FREE SHIPPING OVER $150' },

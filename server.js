@@ -46,18 +46,16 @@ const DEFAULT_SETTINGS = {
     lat: 26.2445, lng: -80.2064
   },
   delivery: {
-    pickupZips: ['33063', '33068', '33093'],
     localZipPrefixes: ['330', '331', '332', '333', '334'],   // South Florida tri-county
     floridaZipPrefixes: ['320','321','322','323','324','325','326','327','328','329','330','331','332','333','334','335','336','337','338','339','341','342','344','346','347','349'],
     rates: {
-      pickup: 0,
       local: 9,
       florida: 14,
       national: 22,
       expressSurcharge: 25,
       freeOver: 150
     },
-    eta: { pickup: 'Same day when ready', local: 'Next business day', florida: '2–3 business days', national: '4–6 business days' }
+    eta: { local: 'Next business day', florida: '2–3 business days', national: '4–6 business days' }
   },
   pricing: { pla: 0.08, petg: 0.10, abs: 0.11, tpu: 0.14, resin: 0.22, nylon: 0.18, minOrder: 15, setupFee: 5, rush: 1.6 }
 };
@@ -144,13 +142,14 @@ function deliveryZone(zip) {
   if (!/^\d{5}$/.test(zip)) return { zone: 'unknown', rate: null };
   const p = zip.slice(0, 3);
   let zone = 'national';
-  if (s.pickupZips.includes(zip)) zone = 'pickup';
-  else if (s.localZipPrefixes.includes(p)) zone = 'local';
+  if (s.localZipPrefixes.includes(p)) zone = 'local';
   else if (s.floridaZipPrefixes.includes(p)) zone = 'florida';
-  return { zone, rate: s.rates[zone === 'pickup' ? 'local' : zone], pickupAvailable: zone === 'pickup' || zone === 'local', eta: s.eta[zone], rates: s.rates };
+  return { zone, rate: s.rates[zone], eta: s.eta[zone], rates: s.rates };
 }
 
-function computeOrderTotals(items, zip, method, express) {
+// Everything is delivered — courier locally, tracked shipping beyond. There is
+// no collection at the lab, so a ZIP is always required and always priced.
+function computeOrderTotals(items, zip, express) {
   const products = store.read('products', []);
   let subtotal = 0; const lines = [];
   for (const it of items || []) {
@@ -164,13 +163,11 @@ function computeOrderTotals(items, zip, method, express) {
   }
   const dz = deliveryZone(zip);
   const rates = store.read('settings', DEFAULT_SETTINGS).delivery.rates;
-  let shipping = 0;
-  if (method === 'pickup') shipping = 0;
-  else shipping = dz.rate == null ? rates.national : dz.rate;
-  if (subtotal >= rates.freeOver && method !== 'pickup') shipping = 0;
-  if (express && method !== 'pickup') shipping += rates.expressSurcharge;
+  let shipping = dz.rate == null ? rates.national : dz.rate;
+  if (subtotal >= rates.freeOver) shipping = 0;
+  if (express) shipping += rates.expressSurcharge;
   const tax = +(subtotal * 0.07).toFixed(2); // Broward County 7%
-  return { lines, subtotal: +subtotal.toFixed(2), shipping: +shipping.toFixed(2), tax, total: +(subtotal + shipping + tax).toFixed(2), zone: method === 'pickup' ? 'pickup' : dz.zone, eta: method === 'pickup' ? 'Pickup when ready' : dz.eta };
+  return { lines, subtotal: +subtotal.toFixed(2), shipping: +shipping.toFixed(2), tax, total: +(subtotal + shipping + tax).toFixed(2), zone: dz.zone, eta: dz.eta };
 }
 
 // ---------- quote estimation ----------
@@ -268,18 +265,19 @@ route('GET', '/api/content', () => {
 });
 route('GET', '/api/delivery/:zip', (req, res, p) => deliveryZone(p.zip));
 route('POST', '/api/track', async (req) => { const b = await readBody(req, 8192); recordEvent(b, req); return { ok: true }; });
-route('POST', '/api/cart/totals', async (req) => { const b = await readBody(req); return computeOrderTotals(b.items, b.zip, b.method, b.express); });
+route('POST', '/api/cart/totals', async (req) => { const b = await readBody(req); return computeOrderTotals(b.items, b.zip, b.express); });
 route('POST', '/api/orders', async (req) => {
   const b = await readBody(req);
-  const totals = computeOrderTotals(b.items, b.customer && b.customer.zip, b.method, b.express);
+  const totals = computeOrderTotals(b.items, b.customer && b.customer.zip, b.express);
   if (!totals.lines.length) throw Object.assign(new Error('Cart is empty'), { status: 400 });
   const c = b.customer || {};
   if (!c.name || !c.email) throw Object.assign(new Error('Name and email are required'), { status: 400 });
-  if (b.method !== 'pickup' && (!c.address || !c.zip)) throw Object.assign(new Error('Address and ZIP required for delivery'), { status: 400 });
+  // everything is delivered, so there is no order without somewhere to send it
+  if (!c.address || !c.zip) throw Object.assign(new Error('Address and ZIP are required'), { status: 400 });
   const order = {
     id: 'LZ-' + (1000 + store.read('orders', []).length + 1), ts: Date.now(), status: 'new',
     customer: { name: clean(c.name), email: clean(c.email), phone: clean(c.phone), address: clean(c.address), city: clean(c.city), zip: clean(c.zip), notes: clean(c.notes) },
-    method: b.method === 'pickup' ? 'pickup' : 'delivery', express: !!b.express, totals, sid: clean(b.sid)
+    method: 'delivery', express: !!b.express, totals, sid: clean(b.sid)
   };
   const orders = store.read('orders', []); orders.push(order); store.write('orders', orders);
   recordEvent({ type: 'purchase', page: '/store', label: order.id, value: totals.total, sid: b.sid }, req);
