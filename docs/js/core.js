@@ -74,13 +74,17 @@
   // ---------- preloader ----------
   function preloader() {
     const pl = $('#preloader'), num = $('#plNum'), bar = $('#plBar');
-    const seen = sessionStorage.getItem('lz_seen');
+    // Storage can throw (Safari private browsing, a sandboxed iframe without
+    // allow-same-origin) — this runs ahead of transitions/cursor/nav/cart/motion
+    // in the boot sequence below, so an uncaught throw here would silently take
+    // all of those down with it, not just the preload skip.
+    let seen; try { seen = sessionStorage.getItem('lz_seen'); } catch { seen = null; }
     if (seen || REDUCED || /nopl/.test(location.search)) { pl.remove(); document.body.classList.add('loaded'); return; }
     let p = 0; const t0 = performance.now();
     const step = () => {
       const el = performance.now() - t0; p = Math.min(100, Math.round(el / 12));
       num.textContent = String(p).padStart(3, '0'); bar.style.width = p + '%';
-      if (p < 100) requestAnimationFrame(step); else setTimeout(() => { pl.classList.add('out'); document.body.classList.add('loaded'); sessionStorage.setItem('lz_seen', '1'); setTimeout(() => pl.remove(), 1000); }, 200);
+      if (p < 100) requestAnimationFrame(step); else setTimeout(() => { pl.classList.add('out'); document.body.classList.add('loaded'); try { sessionStorage.setItem('lz_seen', '1'); } catch { } setTimeout(() => pl.remove(), 1000); }, 200);
     };
     requestAnimationFrame(step);
   }
